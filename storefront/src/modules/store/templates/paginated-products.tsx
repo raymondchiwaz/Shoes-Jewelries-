@@ -29,36 +29,22 @@ export default async function PaginatedProducts({
   productsIds?: string[]
   countryCode: string
 }) {
-  const queryParams: PaginatedProductsParams = {
-    limit: 12,
-  }
+  const queryParams: PaginatedProductsParams = { limit: PRODUCT_LIMIT }
 
-  if (collectionId) {
-    queryParams["collection_id"] = [collectionId]
-  }
-
-  if (categoryId) {
-    queryParams["category_id"] = [categoryId]
-  }
-
-  if (productsIds) {
-    queryParams["id"] = productsIds
-  }
-
-  if (sortBy === "created_at") {
-    queryParams["order"] = "created_at"
-  }
+  if (collectionId) queryParams.collection_id = [collectionId]
+  if (categoryId) queryParams.category_id = [categoryId]
+  if (productsIds) queryParams.id = productsIds
+  if (sortBy === "created_at") queryParams.order = "created_at"
 
   const region = await getRegion(countryCode)
+  if (!region) return null
 
-  if (!region) {
-    return null
-  }
+  const safePage = Math.max(page ?? 1, 1)
 
-  let {
+  const {
     response: { products, count },
   } = await getProductsListWithSort({
-    page,
+    page: safePage,
     queryParams,
     sortBy,
     countryCode,
@@ -68,24 +54,24 @@ export default async function PaginatedProducts({
 
   return (
     <>
-      <ul
-        className="grid grid-cols-2 w-full small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8"
-        data-testid="products-list"
-      >
-        {products.map((p) => {
-          return (
-            <li key={p.id}>
-              <ProductPreview product={p} region={region} />
-            </li>
-          )
-        })}
-      </ul>
       {totalPages > 1 && (
-        <Pagination
-          data-testid="product-pagination"
-          page={page}
-          totalPages={totalPages}
-        />
+        <div className="flex justify-center mb-12 md:mb-16">
+          <Pagination page={safePage} totalPages={totalPages} />
+        </div>
+      )}
+
+      <ul className="grid grid-cols-2 small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8 mb-12 md:mb-16">
+        {products?.map((product) => (
+          <li key={product.id}>
+            <ProductPreview product={product} region={region} />
+          </li>
+        ))}
+      </ul>
+
+      {totalPages > 1 && (
+        <div className="flex justify-center">
+          <Pagination page={safePage} totalPages={totalPages} />
+        </div>
       )}
     </>
   )
