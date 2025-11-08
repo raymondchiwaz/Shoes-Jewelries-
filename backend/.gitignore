@@ -1,5 +1,10 @@
 /dist
 .env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.*.local
 .DS_Store
 /uploads
 /node_modules
@@ -14,6 +19,8 @@ coverage
 !src/**
 
 ./tsconfig.tsbuildinfo
+# Also ignore any tsbuildinfo files
+*.tsbuildinfo
 # package-lock.json
 yarn.lock
 medusa-db.sql
@@ -26,3 +33,12 @@ build
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Keep env template tracked
+!/.env.template
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+*.log
