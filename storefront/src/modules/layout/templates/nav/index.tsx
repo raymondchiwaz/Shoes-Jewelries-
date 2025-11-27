@@ -59,17 +59,10 @@ export default function Nav({ regions = [], cart = null }: NavProps) {
 
   return (
     <nav className={`header-sticky ${headerShadow ? "header-sticky-shadow" : ""}`}>
-      {/* Promotional Ticker – compact, animated */}
+      {/* Promotional Ticker – only moving text (remove static overlay) */}
       <div className="bg-grey-90 text-grey-0 overflow-hidden border-b border-grey-80">
         <div className="ticker h-5 md:h-6">
           <div className="ticker-track animate-marquee">
-            <span className="ticker-item">12% FOR VIP MEMBERS</span>
-            <span className="ticker-sep">—</span>
-            <span className="ticker-item">FREE SHIPPING ON ORDERS OVER $100</span>
-            <span className="ticker-sep">—</span>
-            <span className="ticker-item">12% FOR VIP MEMBERS</span>
-          </div>
-          <div className="ticker-track animate-marquee2" aria-hidden>
             <span className="ticker-item">12% FOR VIP MEMBERS</span>
             <span className="ticker-sep">—</span>
             <span className="ticker-item">FREE SHIPPING ON ORDERS OVER $100</span>

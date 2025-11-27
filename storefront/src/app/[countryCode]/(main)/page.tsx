@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 import FeaturedProducts from "@modules/home/components/featured-products"
 import Hero from "@modules/home/components/hero"
+import ProductContainer from "@modules/home/components/product-container"
 import FeaturedCategories from "@modules/home/components/featured-categories"
 import MorpheusLanding from "@modules/home/components/morpheus-landing"
 import { getCollectionsWithProducts } from "@lib/data/collections"
@@ -23,11 +24,13 @@ export default async function Home({
 
   return (
     <>
-      {/* Sentinel for transparent overlay header: remains intersecting at top; nav turns solid only after scroll */}
-      <div id="page-top-sentinel" className="h-px w-full" aria-hidden="true" />
       {/* Primary landing banner */}
       <MorpheusLanding />
-      {/* Products first */}
+      {/* Sliding container (existing hero) */}
+      <Hero />
+      {/* Products container directly after hero (new) */}
+      <ProductContainer countryCode={countryCode} />
+      {/* Products below hero */}
       {collections && region ? (
         <div className="py-12">
           <ul className="flex flex-col gap-x-6">
@@ -35,8 +38,6 @@ export default async function Home({
           </ul>
         </div>
       ) : null}
-      {/* Sliding container (existing hero) */}
-      <Hero />
       <FeaturedCategories />
     </>
   )

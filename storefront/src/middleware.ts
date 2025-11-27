@@ -1,9 +1,11 @@
 import { HttpTypes } from "@medusajs/types"
-import { notFound } from "next/navigation"
 import { NextRequest, NextResponse } from "next/server"
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL
-const PUBLISHABLE_API_KEY = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
+const PUBLISHABLE_API_KEY =
+  process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY ||
+  process.env.MEDUSA_PUBLISHABLE_KEY ||
+  process.env.MEDUSA_PUBLISHABLE_API_KEY
 const DEFAULT_REGION = process.env.NEXT_PUBLIC_DEFAULT_REGION || "us"
 
 const regionMapCache = {
@@ -35,15 +37,11 @@ async function getRegionMap() {
       const regions = data?.regions || []
 
       if (!regions.length) {
-        if (isDev) {
-          // Fallback for local previews when backend is offline.
-          regionMapCache.regionMap.set(
-            (DEFAULT_REGION || "us").toLowerCase(),
-            {} as unknown as HttpTypes.StoreRegion
-          )
-        } else {
-          notFound()
-        }
+        // Always fallback to DEFAULT_REGION to avoid crashing when publishable key is misconfigured
+        regionMapCache.regionMap.set(
+          (DEFAULT_REGION || "us").toLowerCase(),
+          {} as unknown as HttpTypes.StoreRegion
+        )
       } else {
         // Create a map of country codes to regions.
         regions.forEach((region: HttpTypes.StoreRegion) => {
@@ -55,15 +53,11 @@ async function getRegionMap() {
 
       regionMapCache.regionMapUpdated = Date.now()
     } catch (e) {
-      if (isDev) {
-        // Fallback for local previews when backend is offline.
-        regionMapCache.regionMap.set(
-          (DEFAULT_REGION || "us").toLowerCase(),
-          {} as unknown as HttpTypes.StoreRegion
-        )
-      } else {
-        notFound()
-      }
+      // Always fallback to DEFAULT_REGION to avoid crashing when publishable key is misconfigured
+      regionMapCache.regionMap.set(
+        (DEFAULT_REGION || "us").toLowerCase(),
+        {} as unknown as HttpTypes.StoreRegion
+      )
     }
   }
 
