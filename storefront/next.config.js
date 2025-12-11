@@ -13,6 +13,14 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  experimental: {
+    serverComponentsExternalPackages: [
+      "@medusajs/js-sdk",
+      "@medusajs/ui",
+      "@medusajs/types",
+      "@medusajs/icons",
+    ],
+  },
   images: {
     remotePatterns: [
       {

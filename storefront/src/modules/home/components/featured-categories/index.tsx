@@ -1,31 +1,45 @@
 import Image from "next/image"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import { listCategories } from "@lib/data/categories"
 
-const CATEGORIES = [
-  {
-    id: "women-shoes",
-    title: "Women's Shoes",
-    handle: "women-shoes",
-    image: "/images/categories/women-shoes.jpg",
-    description: "Discover the latest in women's footwear",
-  },
-  {
-    id: "men-shoes",
-    title: "Men's Shoes",
-    handle: "men-shoes",
-    image: "/images/categories/men-shoes.jpg",
-    description: "Premium styles for every occasion",
-  },
-  {
-    id: "jewelry",
-    title: "Jewelry",
-    handle: "jewelry",
-    image: "/images/categories/jewelry.jpg",
-    description: "Elegant accessories to complete your look",
-  },
-]
+export default async function FeaturedCategories() {
+  const categories = await listCategories().catch(() => [])
+  const featured = (categories || [])
+    .filter((c) => (c as any)?.metadata?.featured)
+    .slice(0, 3)
+    .map((c) => ({
+      id: c.id!,
+      title: c.name!,
+      handle: c.handle!,
+      image: (c as any)?.metadata?.image as string | undefined,
+      description: ((c as any)?.metadata?.description as string) || `Shop ${c.name}`,
+    }))
 
-export default function FeaturedCategories() {
+  const fallback = [
+    {
+      id: "women-shoes",
+      title: "Women's Shoes",
+      handle: "women-shoes",
+      image: "/images/categories/women-shoes.jpg",
+      description: "Discover the latest in women's footwear",
+    },
+    {
+      id: "men-shoes",
+      title: "Men's Shoes",
+      handle: "men-shoes",
+      image: "/images/categories/men-shoes.jpg",
+      description: "Premium styles for every occasion",
+    },
+    {
+      id: "jewelry",
+      title: "Jewelry",
+      handle: "jewelry",
+      image: "/images/categories/jewelry.jpg",
+      description: "Elegant accessories to complete your look",
+    },
+  ]
+
+  const data = featured.length ? featured : fallback
   return (
     <section className="section-luxury bg-grey-5">
       <div className="nordstrom-container">
@@ -37,7 +51,7 @@ export default function FeaturedCategories() {
 
         {/* Categories Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {CATEGORIES.map((category) => (
+          {data.map((category) => (
             <LocalizedClientLink
               key={category.id}
               href={`/categories/${category.handle}`}

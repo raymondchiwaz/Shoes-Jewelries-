@@ -100,3 +100,9 @@ export const WORKER_MODE =
  * Disable Admin
  */
 export const SHOULD_DISABLE_ADMIN = process.env.MEDUSA_DISABLE_ADMIN === 'true'
+
+/**
+ * WhatsApp recipient numbers
+ */
+export const WHATSAPP_RAY_NUMBER = process.env.WHATSAPP_RAY_NUMBER
+export const WHATSAPP_VAL_NUMBER = process.env.WHATSAPP_VAL_NUMBER

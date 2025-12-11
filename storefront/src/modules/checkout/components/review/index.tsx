@@ -3,10 +3,14 @@
 import { Heading, Text, clx } from "@medusajs/ui"
 
 import PaymentButton from "../payment-button"
+import { Button } from "@medusajs/ui"
+import { useState } from "react"
+import WhatsAppCheckoutModal from "../whatsapp-checkout-modal"
 import { useSearchParams } from "next/navigation"
 
 const Review = ({ cart }: { cart: any }) => {
   const searchParams = useSearchParams()
+  const [whatsappOpen, setWhatsappOpen] = useState(false)
 
   const isOpen = searchParams.get("step") === "review"
 
@@ -45,7 +49,13 @@ const Review = ({ cart }: { cart: any }) => {
               </Text>
             </div>
           </div>
-          <PaymentButton cart={cart} data-testid="submit-order-button" />
+          <div className="flex gap-4">
+            <PaymentButton cart={cart} data-testid="submit-order-button" />
+            <Button variant="secondary" onClick={() => setWhatsappOpen(true)} data-testid="whatsapp-checkout-button">
+              Checkout via WhatsApp
+            </Button>
+          </div>
+          <WhatsAppCheckoutModal isOpen={whatsappOpen} close={() => setWhatsappOpen(false)} cart={cart} />
         </>
       )}
     </div>

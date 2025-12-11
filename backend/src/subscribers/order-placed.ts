@@ -31,6 +31,30 @@ export default async function orderPlacedHandler({
   } catch (error) {
     console.error('Error sending order confirmation notification:', error)
   }
+
+  // Emit Segment track event if configured
+  try {
+    const key = process.env.SEGMENT_WRITE_KEY
+    if (key) {
+      await fetch('https://api.segment.io/v1/track', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Basic ' + Buffer.from(key + ':').toString('base64'),
+        },
+        body: JSON.stringify({
+          userId: order.customer_id || order.email,
+          event: 'Order Placed',
+          properties: {
+            order_id: order.id,
+            value: (order as any)?.summary?.total || 0,
+            currency: (order as any)?.currency_code || 'USD',
+            items: ((order as any)?.items || []).map((i: any) => ({ id: i.product_id, quantity: i.quantity })),
+          },
+        }),
+      })
+    }
+  } catch (err) {}
 }
 
 export const config: SubscriberConfig = {

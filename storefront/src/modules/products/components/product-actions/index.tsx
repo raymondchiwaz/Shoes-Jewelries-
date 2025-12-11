@@ -67,26 +67,7 @@ export default function ProductActions({
 
   // check if the selected variant is in stock
   const inStock = useMemo(() => {
-    // If we don't manage inventory, we can always add to cart
-    if (selectedVariant && !selectedVariant.manage_inventory) {
-      return true
-    }
-
-    // If we allow back orders on the variant, we can add to cart
-    if (selectedVariant?.allow_backorder) {
-      return true
-    }
-
-    // If there is inventory available, we can add to cart
-    if (
-      selectedVariant?.manage_inventory &&
-      (selectedVariant?.inventory_quantity || 0) > 0
-    ) {
-      return true
-    }
-
-    // Otherwise, we can't add to cart
-    return false
+    return !!selectedVariant
   }, [selectedVariant])
 
   const actionsRef = useRef<HTMLDivElement>(null)
@@ -94,18 +75,25 @@ export default function ProductActions({
   const inView = useIntersection(actionsRef, "0px")
 
   // add the selected variant to the cart
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
+
   const handleAddToCart = async () => {
     if (!selectedVariant?.id) return null
 
     setIsAdding(true)
 
-    await addToCart({
-      variantId: selectedVariant.id,
-      quantity: 1,
-      countryCode,
-    })
-
-    setIsAdding(false)
+    try {
+      await addToCart({
+        variantId: selectedVariant.id,
+        quantity: 1,
+        countryCode,
+      })
+      setErrorMsg(null)
+    } catch (e: any) {
+      setErrorMsg(e?.message || "Unable to add to cart")
+    } finally {
+      setIsAdding(false)
+    }
   }
 
   return (
@@ -149,6 +137,9 @@ export default function ProductActions({
             ? "Out of stock"
             : "Add to cart"}
         </Button>
+        {errorMsg && (
+          <div className="text-red-600 text-sm mt-2" data-testid="add-error">{errorMsg}</div>
+        )}
         <MobileActions
           product={product}
           variant={selectedVariant}

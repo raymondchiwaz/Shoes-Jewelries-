@@ -1,4 +1,3 @@
-import WhatsAppButton from "@modules/products/components/whatsapp-button"
 import { HttpTypes } from "@medusajs/types"
 import { Heading } from "@medusajs/ui"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
@@ -60,28 +59,7 @@ const ProductInfo = ({ product, countryCode }: ProductInfoProps) => {
 
         
 
-        {/* Payment Options - COMPACT VERSION */}
-        <div className="border border-blue-200 rounded-lg p-4 bg-blue-50/50">
-          <div className="flex items-start gap-3">
-            <div className="text-xl">💳</div>
-            <div className="flex-1 space-y-2">
-              <h3 className="font-semibold text-grey-90 text-sm">Payment Options</h3>
-              <div className="text-xs text-grey-60 space-y-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-green-600">✓</span>
-                  <span><strong>Full Payment:</strong> 12% VIP discount + free shipping</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-blue-600">✓</span>
-                  <span><strong>Deposit (30%):</strong> Pay 30% now, rest on delivery</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* WhatsApp Button - COMPACT */}
-        <WhatsAppButton productName={product.title} productUrl={productUrl} />
+        
 
         {/* VIP Badge - ONLY if Black Friday */}
         {product.collection?.handle === "black-friday" && (

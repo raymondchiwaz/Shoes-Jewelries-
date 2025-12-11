@@ -2,6 +2,7 @@ import { Suspense } from "react"
 import PaginatedProducts from "@modules/store/templates/paginated-products"
 import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-grid"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
+import { getTrendingProductIds } from "@lib/data/products"
 
 type Props = {
   countryCode: string
@@ -40,7 +41,7 @@ export default async function ProductContainer({ countryCode, sortBy = "created_
     return (
       <section aria-label="Products" className="content-container py-12 small:py-16">
         <div className="flex items-end justify-between mb-8">
-          <h2 className="text-3xl md:text-4xl font-serif tracking-tight">Featured Products</h2>
+          <h2 className="text-3xl md:text-4xl font-serif tracking-tight">What's Hot Right Now</h2>
         </div>
         <div
           role="status"
@@ -61,13 +62,21 @@ export default async function ProductContainer({ countryCode, sortBy = "created_
     )
   }
 
+  // Fetch trending product IDs (gracefully fallback to default listing if empty)
+  const trendingIds = await getTrendingProductIds({ countryCode }).catch(() => [])
+
   return (
     <section aria-label="Products" className="content-container py-12 small:py-16">
       <div className="flex items-end justify-between mb-8">
-        <h2 className="text-3xl md:text-4xl font-serif tracking-tight">Featured Products</h2>
+        <h2 className="text-3xl md:text-4xl font-serif tracking-tight">What's Hot Right Now</h2>
       </div>
       <Suspense fallback={<SkeletonProductGrid />}>        
-        <PaginatedProducts sortBy={sortBy} page={1} countryCode={countryCode} />
+        <PaginatedProducts
+          sortBy={sortBy}
+          page={1}
+          countryCode={countryCode}
+          productsIds={trendingIds && trendingIds.length ? trendingIds : undefined}
+        />
       </Suspense>
     </section>
   )

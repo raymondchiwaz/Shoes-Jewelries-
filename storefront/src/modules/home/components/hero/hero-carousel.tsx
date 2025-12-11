@@ -8,48 +8,48 @@ interface Slide {
   id: string
   title: string
   subtitle: string
-  ctaText: string
-  ctaLink: string
+  ctaText?: string
+  ctaLink?: string
   backgroundGradient: string
   badge?: string
-  image?: string // NEW: Optional product image
+  image?: string // Optional product image
   imageAlt?: string
 }
 
 // Default slides (fallback if no Medusa data)
+// Wired to local images under `public/images/banner/...`
 const DEFAULT_SLIDES: Slide[] = [
+  // Slide 1 — Morpheus slogan + quote, no button
   {
-    id: "black-friday",
-    title: "Black Friday Exclusive",
-    subtitle: "Discover the latest styles from top brands",
-    ctaText: "Shop Now",
-    ctaLink: "/store",
-    // Use local image for aesthetics similar to categories tiles
-    image: "/images/hero/black-friday.jpg",
-    badge: "Limited Time",
-    imageAlt: "Black Friday luxury fashion collection",
+    id: "morpheus-slogan",
+    title: "Built for speed.",
+    subtitle: "\"Fashions fade, style is eternal.\"",
+    // no CTA for this slide per spec
     backgroundGradient: "from-neutral-900 to-neutral-800",
+    image: "/images/banner/banner-1.webp",
+    imageAlt: "Performance sneaker on dark neon background",
   },
-  {
-    id: "vip-membership",
-    title: "Join VIP Today",
-    subtitle: "Unlock 12% off all purchases + free shipping",
-    ctaText: "Become VIP",
-    ctaLink: "/account",
-    image: "/images/hero/vip.jpg",
-    badge: "Exclusive Benefits",
-    imageAlt: "VIP membership benefits",
-    backgroundGradient: "from-neutral-900 to-neutral-800",
-  },
+  // Slide 2 — New Arrivals with CTA
   {
     id: "new-arrivals",
     title: "New Arrivals",
     subtitle: "Discover the latest styles from top brands",
     ctaText: "Explore Collection",
-    ctaLink: "/store",
-    image: "/images/hero/new-arrivals.jpg",
-    imageAlt: "New arrival shoes collection",
+    ctaLink: "/collections/new-arrivals",
     backgroundGradient: "from-neutral-900 to-neutral-800",
+    image: "/images/banner/banner-2.webp",
+    imageAlt: "Curated accessories and footwear in beige theme",
+  },
+  // Slide 3 — VIP membership with CTA routing to VIP landing
+  {
+    id: "vip-membership",
+    title: "Join VIP Today",
+    subtitle: "Unlock 12% off all purchases + free shipping",
+    ctaText: "Become VIP",
+    ctaLink: "/vip",
+    backgroundGradient: "from-neutral-900 to-neutral-800",
+    image: "/images/banner/banner-3.webp",
+    imageAlt: "Evening clutch styling in emerald tones",
   },
 ]
 
@@ -60,6 +60,9 @@ export default function HeroCarousel({ slides }: { slides?: Slide[] }) {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isAutoPlay, setIsAutoPlay] = useState(true)
   const [isPaused, setIsPaused] = useState(false)
+  const [fallbackSrc, setFallbackSrc] = useState<Record<number, string>>({})
+  const [touchStartX, setTouchStartX] = useState<number | null>(null)
+  const [touchEndX, setTouchEndX] = useState<number | null>(null)
 
   // Navigation functions
   const goToSlide = useCallback((index: number) => {
@@ -91,6 +94,19 @@ export default function HeroCarousel({ slides }: { slides?: Slide[] }) {
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [goToNext, goToPrev])
 
+  // Respect reduced motion: disable autoplay
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (mq.matches) {
+      setIsAutoPlay(false)
+    }
+    const handler = (e: MediaQueryListEvent) => {
+      if (e.matches) setIsAutoPlay(false)
+    }
+    mq.addEventListener?.('change', handler)
+    return () => mq.removeEventListener?.('change', handler)
+  }, [])
+
   // Auto-play logic
   useEffect(() => {
     if (!isAutoPlay || isPaused) return
@@ -101,9 +117,28 @@ export default function HeroCarousel({ slides }: { slides?: Slide[] }) {
 
   return (
     <div
-      className="relative w-full aspect-[16/9] min-h-[60vh] md:min-h-[65vh] overflow-hidden z-0"
+      className="group relative w-full h-[390px] md:h-[476px] lg:h-[562px] overflow-hidden z-0"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={(e) => setTouchStartX(e.changedTouches[0]?.clientX ?? null)}
+      onTouchEnd={(e) => {
+        setTouchEndX(e.changedTouches[0]?.clientX ?? null)
+        const start = touchStartX
+        const end = e.changedTouches[0]?.clientX ?? null
+        if (start != null && end != null) {
+          const delta = end - start
+          if (Math.abs(delta) > 30) {
+            if (delta < 0) {
+              goToNext()
+            } else {
+              goToPrev()
+            }
+            setIsAutoPlay(false)
+          }
+        }
+        setTouchStartX(null)
+        setTouchEndX(null)
+      }}
       role="region"
       aria-label="Hero carousel"
       aria-live="polite"
@@ -125,13 +160,21 @@ export default function HeroCarousel({ slides }: { slides?: Slide[] }) {
               <>
                 {/* Product Image Background */}
                 <Image
-                  src={slide.image}
+                  src={fallbackSrc[index] ?? slide.image}
                   alt={slide.imageAlt || slide.title}
                   fill
                   priority={index === 0} // Priority for first slide
-                  sizes="100vw"
+                  sizes="(max-width: 768px) 100vw, 100vw"
                   className="object-cover object-[50%_60%] lg:object-[50%_66%]"
                   quality={90}
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAQEA8QDxAPDw8PDw8PDw8PDw8PDw8QFREWFhURFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGy0lICYtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAAEAAQMBIgACEQEDEQH/xAAZAAADAQEBAAAAAAAAAAAAAAABAgMEBQb/xAAeEAEAAwABBQEAAAAAAAAAAAABAgMEERITITFBcf/EABgBAQEBAQEAAAAAAAAAAAAAAAECBAUD/8QAGREBAQEAAwAAAAAAAAAAAAAAAAERITFB/9oADAMBAAIRAxEAPwCzKXQ0dQyQeVfCq3WJ3Xqv0rYO1vQJkHf7v1XyL5uO3bqgQn0Fv2jI6VbqjC2r9uXlXr4xgYJ7oVtYigqGk9WnYQ4KfVJuepF2t7W4kNw0sBv//Z"
+                  onError={() => {
+                    const jpg = (slide.image || "").replace(/\.webp$/i, ".jpg")
+                    if (jpg && jpg !== slide.image) {
+                      setFallbackSrc((prev) => ({ ...prev, [index]: jpg }))
+                    }
+                  }}
                 />
                 {/* Dark Overlay for Text Legibility (slightly softened) */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/35 to-black/15 pointer-events-none" />
@@ -153,28 +196,13 @@ export default function HeroCarousel({ slides }: { slides?: Slide[] }) {
             {/* Content */}
             <div className="relative h-full flex items-center">
               <div className="nordstrom-container">
-                {slide.id === "black-friday" ? (
+                {slide.id === "morpheus-slogan" ? (
                   <div className="max-w-4xl animate-fade-in-up">
                     <div className="space-y-4 md:space-y-6">
-                      <div className="hero-headline text-3xl md:text-4xl lg:text-5xl tracking-[0.08em]">BLACK FRIDAY WARM UP</div>
-                      <div className="hero-offer text-6xl md:text-7xl lg:text-8xl">12% OFF</div>
-                      <div className="hero-sub text-xl md:text-2xl tracking-[0.08em]">FOR VIP MEMBERS</div>
+                      <div className="hero-headline text-3xl md:text-4xl lg:text-5xl tracking-[0.08em]">{slide.title}</div>
+                      <div className="hero-sub text-xl md:text-2xl tracking-[0.08em] text-white/90">{slide.subtitle}</div>
                     </div>
-                    <div className="mt-10 md:mt-12 flex flex-wrap items-center gap-4 md:gap-6">
-                      <LocalizedClientLink
-                        href="/categories/shoes"
-                        className="btn-hero-soft uppercase text-[13px] md:text-[15px] font-medium tracking-wider"
-                      >
-                        Shop Shoes
-                      </LocalizedClientLink>
-                      <LocalizedClientLink
-                        href="/categories/jewelry"
-                        className="btn-hero-soft uppercase text-[13px] md:text-[15px] font-medium tracking-wider"
-                      >
-                        Shop Jewelry
-                      </LocalizedClientLink>
-                    </div>
-                    <p className="mt-3 md:mt-4 text-[11px] md:text-xs text-white/80">*Excludes sale & selected lines.</p>
+                    {/* Intentionally no CTA for first slide */}
                   </div>
                 ) : (
                   <div className="max-w-3xl space-y-6 md:space-y-8 animate-fade-in-up">
@@ -188,14 +216,16 @@ export default function HeroCarousel({ slides }: { slides?: Slide[] }) {
                     )}
                     <h1 className="hero-title text-white drop-shadow-2xl">{slide.title}</h1>
                     <p className="hero-subtitle text-white/95 max-w-2xl drop-shadow-lg">{slide.subtitle}</p>
-                    <div className="pt-4">
-                      <LocalizedClientLink
-                        href={slide.ctaLink}
-                        className="inline-block bg-white text-grey-900 hover:bg-grey-100 px-10 py-4 rounded-lg font-semibold text-lg uppercase tracking-wider transition-all shadow-2xl hover:shadow-3xl hover:scale-105"
-                      >
-                        {slide.ctaText}
-                      </LocalizedClientLink>
-                    </div>
+                    {slide.ctaLink && slide.ctaText && (
+                      <div className="pt-4">
+                        <LocalizedClientLink
+                          href={slide.ctaLink}
+                          className="inline-block bg-white text-grey-900 hover:bg-grey-100 px-10 py-4 rounded-lg font-semibold text-lg uppercase tracking-wider transition-all shadow-2xl hover:shadow-3xl hover:scale-105"
+                        >
+                          {slide.ctaText}
+                        </LocalizedClientLink>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -207,32 +237,38 @@ export default function HeroCarousel({ slides }: { slides?: Slide[] }) {
       {/* Left Arrow */}
       <button
         onClick={goToPrev}
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-full p-3 md:p-4 transition-all group"
+        className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-20 p-2 md:p-2.5 text-white transition-opacity opacity-0 group-hover:opacity-100 filter drop-shadow-md"
         aria-label="Previous slide"
       >
-        <svg 
-          className="w-5 h-5 md:w-6 md:h-6 text-white group-hover:scale-110 transition-transform" 
-          fill="none" 
-          stroke="currentColor" 
+        <svg
+          className="w-5 h-5 md:w-6 md:h-6"
           viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.75"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+          <path d="M15 18l-6-6 6-6" />
         </svg>
       </button>
 
       {/* Right Arrow */}
       <button
         onClick={goToNext}
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-full p-3 md:p-4 transition-all group"
+        className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-20 p-2 md:p-2.5 text-white transition-opacity opacity-0 group-hover:opacity-100 filter drop-shadow-md"
         aria-label="Next slide"
       >
-        <svg 
-          className="w-5 h-5 md:w-6 md:h-6 text-white group-hover:scale-110 transition-transform" 
-          fill="none" 
-          stroke="currentColor" 
+        <svg
+          className="w-5 h-5 md:w-6 md:h-6"
           viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.75"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+          <path d="M9 6l6 6-6 6" />
         </svg>
       </button>
 
@@ -255,14 +291,7 @@ export default function HeroCarousel({ slides }: { slides?: Slide[] }) {
         </div>
       </div>
 
-      {/* Pause Indicator */}
-      {isPaused && (
-        <div className="absolute top-8 right-8 z-20 bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full">
-          <span className="text-white text-xs font-semibold uppercase tracking-wider">
-            Paused
-          </span>
-        </div>
-      )}
+      {/* Pause indicator removed per design update */}
 
       {/* Slide Counter (Accessibility) */}
       <div className="sr-only" aria-live="polite" aria-atomic="true">

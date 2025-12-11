@@ -24,6 +24,37 @@ export const getProductsById = cache(async function ({
     .then(({ products }) => products)
 })
 
+// Fetch trending product IDs from the backend and return a limited list
+export const getTrendingProductIds = cache(async function ({
+  countryCode,
+  limit = 12,
+}: {
+  countryCode: string
+  limit?: number
+}): Promise<string[]> {
+  const backendUrl =
+    process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000"
+  const publishableKey =
+    process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY ||
+    process.env.MEDUSA_PUBLISHABLE_KEY ||
+    process.env.MEDUSA_PUBLISHABLE_API_KEY
+
+  try {
+    const res = await fetch(`${backendUrl}/store/trending`, {
+      headers: publishableKey ? { "x-publishable-api-key": publishableKey } : {},
+      next: { revalidate: 120, tags: ["trending"] },
+    })
+
+    if (!res.ok) return []
+
+    const data = await res.json()
+    const ids = (data?.products || []).map((p: any) => p.id)
+    return ids.slice(0, limit)
+  } catch (_) {
+    return []
+  }
+})
+
 export const getProductByHandle = cache(async function (
   handle: string,
   regionId: string

@@ -864,4 +864,37 @@ export default async function seedDemoData({ container }: ExecArgs) {
   });
 
   logger.info("Finished seeding inventory levels data.");
+
+  // Seed VIP customer group and 12% promotion
+  try {
+    const customerModuleService: any = container.resolve(Modules.CUSTOMER as any)
+    const pricingModuleService: any = container.resolve((Modules as any).PRICING)
+
+    const existingGroups = await customerModuleService.listCustomerGroups?.({ name: "VIP" })
+    let vipGroup = existingGroups?.[0]
+    if (!vipGroup) {
+      vipGroup = await customerModuleService.createCustomerGroups?.({ name: "VIP" })
+    }
+
+    // Create a percentage price rule (12%) for VIP group if pricing module is available
+    if (pricingModuleService && vipGroup?.id) {
+      const priceLists = await pricingModuleService.listPriceLists?.({ name: "VIP 12%" })
+      let vipPriceList = priceLists?.[0]
+      if (!vipPriceList) {
+        vipPriceList = await pricingModuleService.createPriceLists?.({
+          name: "VIP 12%",
+          description: "12% off for VIP members",
+          type: "sale",
+          status: "active",
+          rules: [
+            {
+              attribute: "customer_group_id",
+              operator: "eq",
+              value: vipGroup.id,
+            },
+          ],
+        })
+      }
+    }
+  } catch (_) {}
 }

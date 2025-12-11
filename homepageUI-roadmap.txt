@@ -1,0 +1,570 @@
+PHASE 1: NORDSTROM UI ANALYSIS (Based on Research + Your Images)
+What Makes Nordstrom's Homepage World-Class:
+1. VISUAL HIERARCHY & SPACING
+
+    Hero Section: 60-80vh tall (your current: ~40vh)
+
+    Section Padding: py-32 to py-48 (your current: py-12 to py-20)
+
+    Generous White Space: 40-50% of page is intentional blank space
+
+    Letter Spacing: 0.5-1px for body text, 1-2px for headings
+
+    Line Height: 1.8-2.0 for luxury feel (vs. standard 1.5)
+
+2. TYPOGRAPHY SYSTEM
+
+From research findings:
+
+    Serif for Luxury: Playfair Display, Cormorant, or custom serif for headlines
+
+    Sans-serif for Readability: Inter, Helvetica Neue for body text
+
+    Font Weights: Light (300) and Regular (400) dominate, Bold (700) used sparingly
+
+    Text Hierarchy:
+
+    text
+    H1: 4rem (64px) - Hero headlines
+    H2: 3rem (48px) - Section titles
+    H3: 2rem (32px) - Subsections
+    Body: 1rem (16px) - Descriptions
+    Small: 0.875rem (14px) - Captions
+
+3. COLOR PALETTE (Nordstrom-Style)
+
+Primary:
+
+    Black: #000000 (buttons, text)
+
+    White: #FFFFFF (backgrounds)
+
+    Off-white: #F8F8F8 (alternate sections)
+
+Accent Colors (Used Sparingly):
+
+    Gold: #D4AF37 (VIP badges, premium indicators)
+
+    Deep Blue: #1A3A52 (trust, professionalism)
+
+    Soft Red: #C1272D (urgency, sale badges)
+
+Grays (for depth):
+
+    #F5F5F5 - Lightest backgrounds
+
+    #CCCCCC - Borders
+
+    #666666 - Secondary text
+
+    #333333 - Primary text
+
+4. COMPONENT BREAKDOWN (Nordstrom Homepage)
+
+Section 1: Top Banner (Urgency Bar)
+
+    Height: 40-50px
+
+    Message: "Free Shipping Over $89 - Free Returns"
+
+    Sticky on scroll
+
+    Animation: Slide-in on load
+
+Section 2: Navigation
+
+    Logo: Left-aligned, 150-200px width
+
+    Categories: Center (horizontal menu)
+
+    Actions: Right (Search, Account, Cart)
+
+    Sticky header with shadow on scroll
+
+    Mega-menu on category hover
+
+Section 3: Hero Carousel
+
+    Height: 70-80vh (full viewport)
+
+    Auto-play: 6-8 seconds per slide
+
+    Content:
+
+        Large lifestyle image (full bleed)
+
+        Overlay text (white on dark, dark on light)
+
+        1 primary CTA button
+
+        Minimal text (8-12 words max)
+
+    Indicators: Dots at bottom center
+
+    Smooth fade transitions
+
+Section 4: Featured Categories (3-4 tiles)
+
+    Grid: 2x2 or 3-column on desktop
+
+    Aspect Ratio: 4:5 (portrait) or 1:1 (square)
+
+    Hover Effect: Zoom-in on image + darken overlay
+
+    Text Overlay: Category name + "Shop Now" CTA
+
+    Spacing: 20-30px gap between tiles
+
+Section 5: Black Friday Banner (Promotional)
+
+    Full-width background (gradient or image)
+
+    Height: 300-400px
+
+    Centered content:
+
+        Headline: "Black Friday Exclusive"
+
+        Subheadline: "Save up to 20%"
+
+        CTA button: High contrast
+
+    Countdown timer (optional)
+
+Section 6: Featured Products Grid
+
+    Grid: 4 columns on desktop, 2 on tablet, 1 on mobile
+
+    Product Card:
+
+        Image: Aspect 3:4 (portrait)
+
+        Hover: Show second product image
+
+        Brand name (small, uppercase)
+
+        Product title (2 lines max)
+
+        Price: Bold, large font
+
+        Sale price: Red + strikethrough on original
+
+        "Quick Add" button on hover
+
+    Spacing: 40-50px gap between products
+
+Section 7: Editorial Section (Storytelling)
+
+    Layout: 50/50 split (image + text) or full-width image with overlay
+
+    Content:
+
+        Hero image (high-quality lifestyle photo)
+
+        Headline (emotional/aspirational)
+
+        Body text (3-4 sentences)
+
+        "Learn More" CTA
+
+    Purpose: Build brand connection, not hard sell
+
+Section 8: Social Proof / Testimonials
+
+    3-column grid
+
+    Each card:
+
+        5-star rating
+
+        Customer quote (2-3 sentences)
+
+        Customer name + location
+
+        Product image (small)
+
+    Background: Light gray or off-white
+
+Section 9: VIP Membership Promo
+
+    Full-width banner
+
+    Background: Gradient (blue to purple, or gold)
+
+    Content:
+
+        Icon: Crown or diamond
+
+        Headline: "Join VIP"
+
+        Benefits list (4-5 bullet points)
+
+        CTA: "Become VIP Member"
+
+    Spacing: py-20 to py-32
+
+Section 10: Footer
+
+    4-column grid
+
+    Columns:
+
+        About Us
+
+        Customer Service
+
+        Shop
+
+        Follow Us (social media icons)
+
+    Copyright + payment icons at bottom
+
+    Background: Dark (black or dark gray)
+
+    Text: White/light gray
+
+PHASE 2: LUXURY E-COMMERCE DESIGN PRINCIPLES
+From Research Findings:
+1. Visual Minimalism
+
+    80/20 Rule: 80% white space, 20% content
+
+    One message per screen: Avoid information overload
+
+    High-quality imagery: Professional product photos (no clutter)
+
+    Subtle animations: Fade-in on scroll, smooth transitions (300-500ms)
+
+2. Storytelling Over Selling
+
+    Aspirational messaging: "Elevate Your Style" not "Buy Now"
+
+    Emotional connection: Show lifestyle, not just product
+
+    Brand narrative: Each section tells part of your story
+
+3. Trust Signals
+
+    Free shipping threshold: Clearly displayed
+
+    Return policy: 60-day VIP, 30-day standard
+
+    Security badges: Payment icons, SSL certificate
+
+    Customer reviews: Real photos + names
+
+4. Mobile-First (62% of luxury purchases are web, but mobile is growing)
+
+    Responsive images: Different sizes for mobile/desktop
+
+    Touch-friendly: 44px minimum button size
+
+    Fast load times: < 3 seconds
+
+    Simplified navigation: Hamburger menu on mobile
+
+PHASE 3: YOUR HOMEPAGE ROADMAP (Detailed Implementation Plan)
+Current State Analysis:
+
+    ✅ Basic structure exists
+
+    ❌ Spacing too tight (20% vs. needed 40%)
+
+    ❌ Typography generic (system fonts, no hierarchy)
+
+    ❌ No hero carousel (static hero only)
+
+    ❌ No featured products section
+
+    ❌ No editorial/storytelling content
+
+    ❌ No social proof/testimonials
+
+    ❌ Colors lack luxury feel
+
+Target State (Nordstrom-Level):
+
+File Structure:
+
+text
+src/modules/home/components/
+├── hero/
+│   ├── index.tsx (Server - fetches data)
+│   └── hero-carousel.tsx (Client - auto-play logic)
+├── urgency-banner/
+│   └── index.tsx (Client - countdown timer)
+├── featured-categories/
+│   └── index.tsx (Server - fetches categories)
+├── featured-products/
+│   └── index.tsx (Server - fetches products from collection)
+├── promotional-banner/
+│   └── index.tsx (Server - Black Friday promo)
+├── editorial-section/
+│   └── index.tsx (Static - brand storytelling)
+├── testimonials/
+│   └── index.tsx (Static - customer reviews)
+├── vip-promo/
+│   └── index.tsx (Static - membership CTA)
+└── index.tsx (Homepage - assembles all components)
+
+PHASE 4: IMPLEMENTATION PRIORITY (10-Step Plan)
+Step 1: Global Style Enhancements
+
+Files: globals.css, tailwind.config.js
+
+Changes:
+
+    Add Playfair Display font (via Google Fonts)
+
+    Update Tailwind spacing scale
+
+    Add custom color palette
+
+    Set up typography scale
+
+    Increase default line-height
+
+Time: 30 minutes
+Step 2: Hero Carousel (Auto-Play)
+
+File: src/modules/home/components/hero/hero-carousel.tsx
+
+Features:
+
+    3-5 slides (lifestyle images)
+
+    6-second auto-rotate
+
+    Smooth fade transitions
+
+    Pause on hover
+
+    Dot indicators
+
+    Responsive (full-height on desktop, 60vh on mobile)
+
+Content for slides:
+
+    Black Friday Hero: "Exclusive Deals Start Now"
+
+    VIP Membership: "Join VIP - Save 12%"
+
+    Product Showcase: "New Arrivals"
+
+Time: 1-2 hours
+Step 3: Urgency Banner (Top)
+
+File: src/modules/home/components/urgency-banner/index.tsx
+
+Features:
+
+    Sticky on scroll
+
+    Countdown timer (Black Friday ends in X days)
+
+    Message: "Free Shipping Over $89 - 60-Day Returns for VIP"
+
+    Dismissible (X button)
+
+Time: 30 minutes
+Step 4: Featured Categories (Tiles)
+
+File: src/modules/home/components/featured-categories/index.tsx
+
+Layout:
+
+    3 large tiles (Women's Shoes, Men's Shoes, Jewelry)
+
+    Hover effect: Zoom + darken overlay
+
+    Text: Category name + "Shop Now" link
+
+Time: 1 hour
+Step 5: Featured Products Section (From Medusa)
+
+File: src/modules/home/components/featured-products/index.tsx
+
+Features:
+
+    Fetch products from "Black Friday" collection
+
+    8-12 products in grid
+
+    Product card:
+
+        Image (aspect 3:4)
+
+        Title + price
+
+        VIP price badge
+
+        "Add to Cart" on hover
+
+        Link to PDP
+
+Time: 2-3 hours (most complex)
+Step 6: Black Friday Promotional Banner
+
+File: src/modules/home/components/promotional-banner/index.tsx
+
+Design:
+
+    Full-width gradient background
+
+    Centered content:
+
+        "Black Friday Exclusive"
+
+        "Save up to 20% on Selected Items"
+
+        CTA: "Shop Now"
+
+    Countdown timer (days:hours:minutes)
+
+Time: 1 hour
+Step 7: Editorial Section (Storytelling)
+
+File: src/modules/home/components/editorial-section/index.tsx
+
+Layout:
+
+    50/50 split (image left, text right)
+
+    Content:
+
+        Headline: "Your Style, Elevated"
+
+        Body: 3-4 sentences about quality/craftsmanship
+
+        CTA: "Learn Our Story"
+
+Time: 30 minutes
+Step 8: Testimonials Section
+
+File: src/modules/home/components/testimonials/index.tsx
+
+Layout:
+
+    3-column grid
+
+    Each testimonial:
+
+        5-star rating
+
+        Quote
+
+        Customer name + location
+
+        Product image (small thumbnail)
+
+Time: 1 hour
+Step 9: VIP Membership Promo
+
+File: src/modules/home/components/vip-promo/index.tsx
+
+Design:
+
+    Full-width banner (gradient background: gold to amber)
+
+    Icon: Diamond
+
+    Headline: "Unlock VIP Benefits"
+
+    Benefits:
+
+        Save 12% on all purchases
+
+        Free shipping always
+
+        Priority support
+
+        60-day returns
+
+    CTA: "Join Now"
+
+Time: 1 hour
+Step 10: Spacing & Typography Polish
+
+Global Changes:
+
+    Increase section padding: py-20 → py-32
+
+    Add section dividers (1px light gray)
+
+    Consistent heading sizes
+
+    Font weight adjustments
+
+    Letter spacing tweaks
+
+Time: 1 hour
+TOTAL ESTIMATED TIME: 10-15 hours (spread over 2-3 days with Trae)
+PHASE 5: VISUAL MOCKUP (What User Sees)
+
+text
+┌────────────────────────────────────────┐
+│ 🔥 BLACK FRIDAY: 2 DAYS LEFT | -20%   │ ← Urgency Banner (sticky)
+├────────────────────────────────────────┤
+│  LOGO    Categories   🔍 👤 🛒        │ ← Navigation
+├────────────────────────────────────────┤
+│                                        │
+│         HERO CAROUSEL                  │
+│    [Large lifestyle image]             │ ← Hero (70vh)
+│    "Exclusive Black Friday Deals"      │
+│         [Shop Now Button]              │
+│                                        │
+├────────────────────────────────────────┤
+│                                        │
+│   [Tile]   [Tile]   [Tile]           │ ← Featured Categories
+│  Women's   Men's    Jewelry            │
+│                                        │
+├────────────────────────────────────────┤
+│                                        │
+│   BLACK FRIDAY BANNER (full-width)     │ ← Promotional
+│   "Save up to 20% • 48:32:15"         │
+│                                        │
+├────────────────────────────────────────┤
+│                                        │
+│   FEATURED PRODUCTS (4-col grid)       │
+│   [Product] [Product] [Product] [...]  │ ← Products from Medusa
+│                                        │
+├────────────────────────────────────────┤
+│                                        │
+│   [Image 50%] [Text 50%]              │ ← Editorial
+│   "Your Style, Elevated"               │
+│                                        │
+├────────────────────────────────────────┤
+│                                        │
+│   TESTIMONIALS (3-col)                 │
+│   ⭐⭐⭐⭐⭐ ⭐⭐⭐⭐⭐ ⭐⭐⭐⭐⭐          │
+│                                        │
+├────────────────────────────────────────┤
+│                                        │
+│   💎 JOIN VIP (full-width banner)      │
+│   Save 12% • Free Shipping • More      │
+│                                        │
+├────────────────────────────────────────┤
+│          FOOTER (4-col)                │
+└────────────────────────────────────────┘
+
+NEXT STEPS - YOUR DECISION:
+
+Option A: Start with Quick Wins (1-2 hours)
+
+    Typography upgrades
+
+    Spacing increases
+
+    Color palette updates
+    → Result: Immediate visual improvement (~50% better)
+
+Option B: Full Rebuild (10-15 hours with Trae)
+
+    All 10 steps above
+
+    Production-ready Nordstrom clone
+    → Result: Professional, luxury-grade homepage
+
+Recommendation: Start with Option A (quick wins), THEN move to Option B (full build). This way you see progress immediately while Trae works on complex components.
+
+Ready to proceed? Which option do you want to start with? 🚀

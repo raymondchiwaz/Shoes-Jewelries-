@@ -52,10 +52,10 @@ export default async function Hero() {
   const slides = await getHeroSlides()
 
   return (
-    <section className="relative w-full bg-grey-900">
+    <section className="relative w-full bg-grey-900 my-8 md:my-10">
       <Suspense
         fallback={
-          <div className="w-full h-[70vh] md:h-[80vh] bg-gradient-to-br from-grey-900 to-grey-800 animate-pulse" />
+          <div className="w-full h-[55vh] md:h-[60vh] bg-gradient-to-br from-grey-900 to-grey-800 animate-pulse" />
         }
       >
         <HeroCarousel slides={slides.length > 0 ? slides : undefined} />

@@ -18,7 +18,7 @@ export async function retrieveCart() {
   }
 
   return await sdk.store.cart
-    .retrieve(cartId, {}, { next: { tags: ["cart"] }, ...getAuthHeaders() })
+    .retrieve(cartId, {}, { next: { tags: ["cart"] } }, getAuthHeaders())
     .then(({ cart }) => cart)
     .catch(() => {
       return null

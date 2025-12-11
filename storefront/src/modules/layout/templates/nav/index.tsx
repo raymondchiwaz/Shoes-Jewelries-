@@ -162,9 +162,12 @@ export default function Nav({ regions = [], cart = null }: NavProps) {
 
             {/* Right: Account + Cart */}
             <div className="flex items-center justify-end gap-4 md:gap-6">
+              <div className="hidden lg:block w-[420px]">
+                <HeaderSearch />
+              </div>
               <LocalizedClientLink
                 href="/account"
-                className={`transition-colors text-sm md:text-base ${isSolidFinal ? "text-grey-90 hover:text-grey-60" : "text-white hover:text-grey-5"}`}
+                className={`${isSolidFinal ? "text-grey-90 hover:text-grey-60" : "text-white hover:text-grey-5"} transition-colors text-sm md:text-base`}
               >
                 <span className="hidden md:inline text-xs uppercase font-semibold tracking-wide">
                   Account
@@ -178,6 +181,12 @@ export default function Nav({ regions = [], cart = null }: NavProps) {
                 </div>
               </Suspense>
             </div>
+          </div>
+        </div>
+        {/* Mobile search under nav */}
+        <div className={`lg:hidden ${isSolidFinal ? "bg-white" : "bg-transparent"} border-t border-grey-20`}> 
+          <div className="nordstrom-container py-2">
+            <HeaderSearch />
           </div>
         </div>
 
