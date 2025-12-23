@@ -5,14 +5,26 @@ import { OrderDTO, OrderAddressDTO } from '@medusajs/framework/types'
 
 export const ORDER_PLACED = 'order-placed'
 
+interface ShipRankCarrier {
+  id: string
+  name: string
+  amount: number
+  amount_formatted: string
+  currency_code: string
+  estimated_days: string | null
+  provider: string
+}
+
 interface OrderPlacedPreviewProps {
   order: OrderDTO & { display_id: string; summary: { raw_current_order_total: { value: number } } }
   shippingAddress: OrderAddressDTO
+  shipRankCarrier?: ShipRankCarrier | null
 }
 
 export interface OrderPlacedTemplateProps {
   order: OrderDTO & { display_id: string; summary: { raw_current_order_total: { value: number } } }
   shippingAddress: OrderAddressDTO
+  shipRankCarrier?: ShipRankCarrier | null
   preview?: string
 }
 
@@ -21,7 +33,7 @@ export const isOrderPlacedTemplateData = (data: any): data is OrderPlacedTemplat
 
 export const OrderPlacedTemplate: React.FC<OrderPlacedTemplateProps> & {
   PreviewProps: OrderPlacedPreviewProps
-} = ({ order, shippingAddress, preview = 'Your order has been placed!' }) => {
+} = ({ order, shippingAddress, shipRankCarrier, preview = 'Your order has been placed!' }) => {
   return (
     <Base preview={preview}>
       <Section>
@@ -51,6 +63,37 @@ export const OrderPlacedTemplate: React.FC<OrderPlacedTemplateProps> & {
         </Text>
 
         <Hr style={{ margin: '20px 0' }} />
+
+        {shipRankCarrier && (
+          <>
+            <Text style={{ fontSize: '18px', fontWeight: 'bold', margin: '0 0 10px' }}>
+              Shipping Details
+            </Text>
+            <div style={{
+              backgroundColor: '#FEF3C7',
+              border: '1px solid #F59E0B',
+              borderRadius: '8px',
+              padding: '15px',
+              margin: '0 0 20px'
+            }}>
+              <Text style={{ margin: '0 0 5px', fontWeight: 'bold', color: '#92400E' }}>
+                {shipRankCarrier.name}
+              </Text>
+              <Text style={{ margin: '0 0 5px', color: '#B45309' }}>
+                Price: {shipRankCarrier.amount_formatted}
+              </Text>
+              {shipRankCarrier.estimated_days && (
+                <Text style={{ margin: '0 0 5px', color: '#B45309' }}>
+                  Estimated Delivery: {shipRankCarrier.estimated_days}
+                </Text>
+              )}
+              <Text style={{ margin: '10px 0 0', fontSize: '12px', color: '#D97706' }}>
+                💡 Note: Shipping fees are payable to the courier upon collection.
+              </Text>
+            </div>
+            <Hr style={{ margin: '20px 0' }} />
+          </>
+        )}
 
         <Text style={{ fontSize: '18px', fontWeight: 'bold', margin: '0 0 10px' }}>
           Shipping Address
@@ -136,7 +179,17 @@ OrderPlacedTemplate.PreviewProps = {
     province: 'CA',
     postal_code: '12345',
     country_code: 'US'
+  },
+  shipRankCarrier: {
+    id: 'test-carrier-id',
+    name: 'Express Shipping - 3-5 days',
+    amount: 1500,
+    amount_formatted: '$15.00/kg',
+    currency_code: 'usd',
+    estimated_days: '3-5 days',
+    provider: 'shiprank'
   }
 } as OrderPlacedPreviewProps
 
 export default OrderPlacedTemplate
+

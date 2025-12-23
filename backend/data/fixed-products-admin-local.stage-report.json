@@ -1,0 +1,393 @@
+{
+  "input": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\product-import-template.csv",
+  "output": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\backend\\data\\fixed-products-admin-local.csv",
+  "base_url": "http://localhost:8000",
+  "staged_root": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\storefront\\public\\images\\imports",
+  "image_columns": [
+    "Product Thumbnail",
+    "Product Image 1 Url",
+    "Product Image 2 Url"
+  ],
+  "copied": [],
+  "missing": [
+    {
+      "row": 2,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\$60 🔥🔥LV classic business men's sunglasses, polarized metal full-frame sunshade, trendy new outdoor sport shades\\13409871900523275.jpg",
+      "rel": "$60 🔥🔥LV classic business men's sunglasses, polarized metal full-frame sunshade, trendy new outdoor sport shades/13409871900523275.jpg"
+    },
+    {
+      "row": 2,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\$60 🔥🔥LV classic business men's sunglasses, polarized metal full-frame sunshade, trendy new outdoor sport shades\\13409871900523275.jpg",
+      "rel": "$60 🔥🔥LV classic business men's sunglasses, polarized metal full-frame sunshade, trendy new outdoor sport shades/13409871900523275.jpg"
+    },
+    {
+      "row": 2,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\$60 🔥🔥LV classic business men's sunglasses, polarized metal full-frame sunshade, trendy new outdoor sport shades\\13409872006347349.jpg",
+      "rel": "$60 🔥🔥LV classic business men's sunglasses, polarized metal full-frame sunshade, trendy new outdoor sport shades/13409872006347349.jpg"
+    },
+    {
+      "row": 3,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\1955 Gucci Retro Horsebit Bag\\13409874713552217.jpg",
+      "rel": "1955 Gucci Retro Horsebit Bag/13409874713552217.jpg"
+    },
+    {
+      "row": 3,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\1955 Gucci Retro Horsebit Bag\\13409874713552217.jpg",
+      "rel": "1955 Gucci Retro Horsebit Bag/13409874713552217.jpg"
+    },
+    {
+      "row": 3,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\1955 Gucci Retro Horsebit Bag\\13409874826824809.jpg",
+      "rel": "1955 Gucci Retro Horsebit Bag/13409874826824809.jpg"
+    },
+    {
+      "row": 4,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\DIOR  Lady D-Lite Embroidered Bag\\13409875382509391.jpg",
+      "rel": "DIOR  Lady D-Lite Embroidered Bag/13409875382509391.jpg"
+    },
+    {
+      "row": 4,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\DIOR  Lady D-Lite Embroidered Bag\\13409875382509391.jpg",
+      "rel": "DIOR  Lady D-Lite Embroidered Bag/13409875382509391.jpg"
+    },
+    {
+      "row": 4,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\DIOR  Lady D-Lite Embroidered Bag\\13409875389280533.jpg",
+      "rel": "DIOR  Lady D-Lite Embroidered Bag/13409875389280533.jpg"
+    },
+    {
+      "row": 5,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\Gucci Gucci  Miami 2022\\13409873708206692.jpg",
+      "rel": "Gucci Gucci  Miami 2022/13409873708206692.jpg"
+    },
+    {
+      "row": 5,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\Gucci Gucci  Miami 2022\\13409873708206692.jpg",
+      "rel": "Gucci Gucci  Miami 2022/13409873708206692.jpg"
+    },
+    {
+      "row": 5,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\Gucci Gucci  Miami 2022\\13409873713344573.jpg",
+      "rel": "Gucci Gucci  Miami 2022/13409873713344573.jpg"
+    },
+    {
+      "row": 6,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\GUCCI Men's New Backpack\\13409875065291713.jpg",
+      "rel": "GUCCI Men's New Backpack/13409875065291713.jpg"
+    },
+    {
+      "row": 6,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\GUCCI Men's New Backpack\\13409875065291713.jpg",
+      "rel": "GUCCI Men's New Backpack/13409875065291713.jpg"
+    },
+    {
+      "row": 6,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\GUCCI Men's New Backpack\\13409875075677265.jpg",
+      "rel": "GUCCI Men's New Backpack/13409875075677265.jpg"
+    },
+    {
+      "row": 7,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\LV Backpack Multi-purpose Bag The Montsouris BB Backpack\\13409875654011937.jpg",
+      "rel": "LV Backpack Multi-purpose Bag The Montsouris BB Backpack/13409875654011937.jpg"
+    },
+    {
+      "row": 7,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\LV Backpack Multi-purpose Bag The Montsouris BB Backpack\\13409875654011937.jpg",
+      "rel": "LV Backpack Multi-purpose Bag The Montsouris BB Backpack/13409875654011937.jpg"
+    },
+    {
+      "row": 7,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\LV Backpack Multi-purpose Bag The Montsouris BB Backpack\\13409875664311171.jpg",
+      "rel": "LV Backpack Multi-purpose Bag The Montsouris BB Backpack/13409875664311171.jpg"
+    },
+    {
+      "row": 8,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\LV Pillow Bag\\13409875881950406.jpg",
+      "rel": "LV Pillow Bag/13409875881950406.jpg"
+    },
+    {
+      "row": 8,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\LV Pillow Bag\\13409875881950406.jpg",
+      "rel": "LV Pillow Bag/13409875881950406.jpg"
+    },
+    {
+      "row": 8,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\LV Pillow Bag\\13409875886032547.jpg",
+      "rel": "LV Pillow Bag/13409875886032547.jpg"
+    },
+    {
+      "row": 9,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\MiuMiu 2022SS new High version\\13409874168072646.jpg",
+      "rel": "MiuMiu 2022SS new High version/13409874168072646.jpg"
+    },
+    {
+      "row": 9,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\MiuMiu 2022SS new High version\\13409874168072646.jpg",
+      "rel": "MiuMiu 2022SS new High version/13409874168072646.jpg"
+    },
+    {
+      "row": 9,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\MiuMiu 2022SS new High version\\13409874241815439.jpg",
+      "rel": "MiuMiu 2022SS new High version/13409874241815439.jpg"
+    },
+    {
+      "row": 10,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\New folder\\13409876785507845.jpg",
+      "rel": "New folder/13409876785507845.jpg"
+    },
+    {
+      "row": 10,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\New folder\\13409876785507845.jpg",
+      "rel": "New folder/13409876785507845.jpg"
+    },
+    {
+      "row": 10,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\New folder\\13409876792500978.jpg",
+      "rel": "New folder/13409876792500978.jpg"
+    },
+    {
+      "row": 11,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\Nike Air Max Dn Comfortable Shock-Absorbing\\13409876267313675.jpg",
+      "rel": "Nike Air Max Dn Comfortable Shock-Absorbing/13409876267313675.jpg"
+    },
+    {
+      "row": 11,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\Nike Air Max Dn Comfortable Shock-Absorbing\\13409876267313675.jpg",
+      "rel": "Nike Air Max Dn Comfortable Shock-Absorbing/13409876267313675.jpg"
+    },
+    {
+      "row": 11,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\Nike Air Max Dn Comfortable Shock-Absorbing\\13409876275680337.jpg",
+      "rel": "Nike Air Max Dn Comfortable Shock-Absorbing/13409876275680337.jpg"
+    },
+    {
+      "row": 12,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\Nike Air Zoom Vomero 18 GTX\\13409876550464293.jpg",
+      "rel": "Nike Air Zoom Vomero 18 GTX/13409876550464293.jpg"
+    },
+    {
+      "row": 12,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\Nike Air Zoom Vomero 18 GTX\\13409876550464293.jpg",
+      "rel": "Nike Air Zoom Vomero 18 GTX/13409876550464293.jpg"
+    },
+    {
+      "row": 12,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\Nike Air Zoom Vomero 18 GTX\\13409876568589344.jpg",
+      "rel": "Nike Air Zoom Vomero 18 GTX/13409876568589344.jpg"
+    },
+    {
+      "row": 13,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\VALENTINO  ²⁰²¹ 💫 Daigou Level\\13409873997181179.jpg",
+      "rel": "VALENTINO  ²⁰²¹ 💫 Daigou Level/13409873997181179.jpg"
+    },
+    {
+      "row": 13,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\VALENTINO  ²⁰²¹ 💫 Daigou Level\\13409873997181179.jpg",
+      "rel": "VALENTINO  ²⁰²¹ 💫 Daigou Level/13409873997181179.jpg"
+    },
+    {
+      "row": 13,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\VALENTINO  ²⁰²¹ 💫 Daigou Level\\13409874002833059.jpg",
+      "rel": "VALENTINO  ²⁰²¹ 💫 Daigou Level/13409874002833059.jpg"
+    },
+    {
+      "row": 14,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\🎀Christian Louboutin CL Red Sole Shoes Early Spring Collection\\13409873110633015.jpg",
+      "rel": "🎀Christian Louboutin CL Red Sole Shoes Early Spring Collection/13409873110633015.jpg"
+    },
+    {
+      "row": 14,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\🎀Christian Louboutin CL Red Sole Shoes Early Spring Collection\\13409873110633015.jpg",
+      "rel": "🎀Christian Louboutin CL Red Sole Shoes Early Spring Collection/13409873110633015.jpg"
+    },
+    {
+      "row": 14,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\🎀Christian Louboutin CL Red Sole Shoes Early Spring Collection\\13409873116069007.jpg",
+      "rel": "🎀Christian Louboutin CL Red Sole Shoes Early Spring Collection/13409873116069007.jpg"
+    },
+    {
+      "row": 15,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$51 【Fendi】2025 early spring new style, trendy hot item, fashionable square-frame sunglasses, high quality, comfortable to wear, internet celebrity trendy shades, women's high-definition sunglasses 🕶️\\13409872858013286.jpg",
+      "rel": "💰$51 【Fendi】2025 early spring new style, trendy hot item, fashionable square-frame sunglasses, high quality, comfortable to wear, internet celebrity trendy shades, women's high-definition sunglasses 🕶️/13409872858013286.jpg"
+    },
+    {
+      "row": 15,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$51 【Fendi】2025 early spring new style, trendy hot item, fashionable square-frame sunglasses, high quality, comfortable to wear, internet celebrity trendy shades, women's high-definition sunglasses 🕶️\\13409872858013286.jpg",
+      "rel": "💰$51 【Fendi】2025 early spring new style, trendy hot item, fashionable square-frame sunglasses, high quality, comfortable to wear, internet celebrity trendy shades, women's high-definition sunglasses 🕶️/13409872858013286.jpg"
+    },
+    {
+      "row": 15,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$51 【Fendi】2025 early spring new style, trendy hot item, fashionable square-frame sunglasses, high quality, comfortable to wear, internet celebrity trendy shades, women's high-definition sunglasses 🕶️\\13409872863512369.jpg",
+      "rel": "💰$51 【Fendi】2025 early spring new style, trendy hot item, fashionable square-frame sunglasses, high quality, comfortable to wear, internet celebrity trendy shades, women's high-definition sunglasses 🕶️/13409872863512369.jpg"
+    },
+    {
+      "row": 16,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$53 Chanel 2025 early spring new sunglasses. Various internet celebrities are wearing them, full of presence‼️ Playful and sweet, the effect on the face is even better. The metal texture is excellent. M\\13409872469815521.jpg",
+      "rel": "💰$53 Chanel 2025 early spring new sunglasses. Various internet celebrities are wearing them, full of presence‼️ Playful and sweet, the effect on the face is even better. The metal texture is excellent. M/13409872469815521.jpg"
+    },
+    {
+      "row": 16,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$53 Chanel 2025 early spring new sunglasses. Various internet celebrities are wearing them, full of presence‼️ Playful and sweet, the effect on the face is even better. The metal texture is excellent. M\\13409872469815521.jpg",
+      "rel": "💰$53 Chanel 2025 early spring new sunglasses. Various internet celebrities are wearing them, full of presence‼️ Playful and sweet, the effect on the face is even better. The metal texture is excellent. M/13409872469815521.jpg"
+    },
+    {
+      "row": 16,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$53 Chanel 2025 early spring new sunglasses. Various internet celebrities are wearing them, full of presence‼️ Playful and sweet, the effect on the face is even better. The metal texture is excellent. M\\13409872473565211.jpg",
+      "rel": "💰$53 Chanel 2025 early spring new sunglasses. Various internet celebrities are wearing them, full of presence‼️ Playful and sweet, the effect on the face is even better. The metal texture is excellent. M/13409872473565211.jpg"
+    },
+    {
+      "row": 17,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$54 Fendi 2025 New Style, Absolutely Gorgeous F Diamond, Metal Square Frameless Sunglasses, Sun Protection, Slimming Effect, Anti-UV, Unisex. FE4082US\\13409872624823156.jpg",
+      "rel": "💰$54 Fendi 2025 New Style, Absolutely Gorgeous F Diamond, Metal Square Frameless Sunglasses, Sun Protection, Slimming Effect, Anti-UV, Unisex. FE4082US/13409872624823156.jpg"
+    },
+    {
+      "row": 17,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$54 Fendi 2025 New Style, Absolutely Gorgeous F Diamond, Metal Square Frameless Sunglasses, Sun Protection, Slimming Effect, Anti-UV, Unisex. FE4082US\\13409872624823156.jpg",
+      "rel": "💰$54 Fendi 2025 New Style, Absolutely Gorgeous F Diamond, Metal Square Frameless Sunglasses, Sun Protection, Slimming Effect, Anti-UV, Unisex. FE4082US/13409872624823156.jpg"
+    },
+    {
+      "row": 17,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$54 Fendi 2025 New Style, Absolutely Gorgeous F Diamond, Metal Square Frameless Sunglasses, Sun Protection, Slimming Effect, Anti-UV, Unisex. FE4082US\\13409872652915619.jpg",
+      "rel": "💰$54 Fendi 2025 New Style, Absolutely Gorgeous F Diamond, Metal Square Frameless Sunglasses, Sun Protection, Slimming Effect, Anti-UV, Unisex. FE4082US/13409872652915619.jpg"
+    },
+    {
+      "row": 18,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$55 Cartier 2024 New Frameless Men's and Women's Fashion Anti-Blue Light High-Definition Ultra-light Stylish Young Portable Glasses\\13409872147827091.jpg",
+      "rel": "💰$55 Cartier 2024 New Frameless Men's and Women's Fashion Anti-Blue Light High-Definition Ultra-light Stylish Young Portable Glasses/13409872147827091.jpg"
+    },
+    {
+      "row": 18,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$55 Cartier 2024 New Frameless Men's and Women's Fashion Anti-Blue Light High-Definition Ultra-light Stylish Young Portable Glasses\\13409872147827091.jpg",
+      "rel": "💰$55 Cartier 2024 New Frameless Men's and Women's Fashion Anti-Blue Light High-Definition Ultra-light Stylish Young Portable Glasses/13409872147827091.jpg"
+    },
+    {
+      "row": 18,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$55 Cartier 2024 New Frameless Men's and Women's Fashion Anti-Blue Light High-Definition Ultra-light Stylish Young Portable Glasses\\13409872181385921.jpg",
+      "rel": "💰$55 Cartier 2024 New Frameless Men's and Women's Fashion Anti-Blue Light High-Definition Ultra-light Stylish Young Portable Glasses/13409872181385921.jpg"
+    },
+    {
+      "row": 19,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$57 【TR Polarized Series】LV large-frame sunglasses. The classic square-frame design suits all face shapes and looks very classy whether paired with a coat or a dress. Polarized lenses prevent UV rays. M\\13409869987477801.jpg",
+      "rel": "💰$57 【TR Polarized Series】LV large-frame sunglasses. The classic square-frame design suits all face shapes and looks very classy whether paired with a coat or a dress. Polarized lenses prevent UV rays. M/13409869987477801.jpg"
+    },
+    {
+      "row": 19,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$57 【TR Polarized Series】LV large-frame sunglasses. The classic square-frame design suits all face shapes and looks very classy whether paired with a coat or a dress. Polarized lenses prevent UV rays. M\\13409869987477801.jpg",
+      "rel": "💰$57 【TR Polarized Series】LV large-frame sunglasses. The classic square-frame design suits all face shapes and looks very classy whether paired with a coat or a dress. Polarized lenses prevent UV rays. M/13409869987477801.jpg"
+    },
+    {
+      "row": 19,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$57 【TR Polarized Series】LV large-frame sunglasses. The classic square-frame design suits all face shapes and looks very classy whether paired with a coat or a dress. Polarized lenses prevent UV rays. M\\13409870005556980.jpg",
+      "rel": "💰$57 【TR Polarized Series】LV large-frame sunglasses. The classic square-frame design suits all face shapes and looks very classy whether paired with a coat or a dress. Polarized lenses prevent UV rays. M/13409870005556980.jpg"
+    },
+    {
+      "row": 20,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$58 Salvatore Ferragamo MODEL：FD8131 SIZE：53口22-145\\13409871729521324.jpg",
+      "rel": "💰$58 Salvatore Ferragamo MODEL：FD8131 SIZE：53口22-145/13409871729521324.jpg"
+    },
+    {
+      "row": 20,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$58 Salvatore Ferragamo MODEL：FD8131 SIZE：53口22-145\\13409871729521324.jpg",
+      "rel": "💰$58 Salvatore Ferragamo MODEL：FD8131 SIZE：53口22-145/13409871729521324.jpg"
+    },
+    {
+      "row": 20,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$58 Salvatore Ferragamo MODEL：FD8131 SIZE：53口22-145\\13409871734744459.jpg",
+      "rel": "💰$58 Salvatore Ferragamo MODEL：FD8131 SIZE：53口22-145/13409871734744459.jpg"
+    },
+    {
+      "row": 21,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$60 ♦LV 2025 new style men's and women's couple's sunglasses, polygon design. i¥ electroplating never fades, super light and elastic, the entire frame has no screws, and most importantly, it's unbreakab\\13409870429455327.jpg",
+      "rel": "💰$60 ♦LV 2025 new style men's and women's couple's sunglasses, polygon design. i¥ electroplating never fades, super light and elastic, the entire frame has no screws, and most importantly, it's unbreakab/13409870429455327.jpg"
+    },
+    {
+      "row": 21,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$60 ♦LV 2025 new style men's and women's couple's sunglasses, polygon design. i¥ electroplating never fades, super light and elastic, the entire frame has no screws, and most importantly, it's unbreakab\\13409870429455327.jpg",
+      "rel": "💰$60 ♦LV 2025 new style men's and women's couple's sunglasses, polygon design. i¥ electroplating never fades, super light and elastic, the entire frame has no screws, and most importantly, it's unbreakab/13409870429455327.jpg"
+    },
+    {
+      "row": 21,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$60 ♦LV 2025 new style men's and women's couple's sunglasses, polygon design. i¥ electroplating never fades, super light and elastic, the entire frame has no screws, and most importantly, it's unbreakab\\13409870438524787.jpg",
+      "rel": "💰$60 ♦LV 2025 new style men's and women's couple's sunglasses, polygon design. i¥ electroplating never fades, super light and elastic, the entire frame has no screws, and most importantly, it's unbreakab/13409870438524787.jpg"
+    },
+    {
+      "row": 22,
+      "col": "Product Thumbnail",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$69 ‼️Salvatore Ferragamo 💚💚MODEL：SF1092SLB 💚💚💚SIZE：52口19-145💚💚💚\\13409871480712985.jpg",
+      "rel": "💰$69 ‼️Salvatore Ferragamo 💚💚MODEL：SF1092SLB 💚💚💚SIZE：52口19-145💚💚💚/13409871480712985.jpg"
+    },
+    {
+      "row": 22,
+      "col": "Product Image 1 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$69 ‼️Salvatore Ferragamo 💚💚MODEL：SF1092SLB 💚💚💚SIZE：52口19-145💚💚💚\\13409871480712985.jpg",
+      "rel": "💰$69 ‼️Salvatore Ferragamo 💚💚MODEL：SF1092SLB 💚💚💚SIZE：52口19-145💚💚💚/13409871480712985.jpg"
+    },
+    {
+      "row": 22,
+      "col": "Product Image 2 Url",
+      "src": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\💰$69 ‼️Salvatore Ferragamo 💚💚MODEL：SF1092SLB 💚💚💚SIZE：52口19-145💚💚💚\\13409871514399841.jpg",
+      "rel": "💰$69 ‼️Salvatore Ferragamo 💚💚MODEL：SF1092SLB 💚💚💚SIZE：52口19-145💚💚💚/13409871514399841.jpg"
+    }
+  ],
+  "rewritten_fields": 63
+}

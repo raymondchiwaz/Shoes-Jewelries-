@@ -1,0 +1,849 @@
+{
+  "input": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\product-import-template.csv",
+  "output": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\backend\\data\\fixed-products-admin.csv",
+  "expectedCols": 40,
+  "issues": [
+    {
+      "row": 2,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 2,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 2,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 2,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 2,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 2,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 2,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 2,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 3,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 3,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 3,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 3,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 3,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 3,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 3,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 3,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 3,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 4,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 4,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 4,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 4,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 4,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 4,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 4,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 4,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 4,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 5,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 5,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 5,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 5,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 5,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 5,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 5,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 5,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 5,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 6,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 6,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 6,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 6,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 6,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 6,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 6,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 6,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 6,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 7,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 7,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 7,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 7,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 7,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 7,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 7,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 7,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 7,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 8,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 8,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 8,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 8,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 8,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 8,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 8,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 8,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 9,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 9,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 9,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 9,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 9,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 9,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 9,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 9,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 9,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 10,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 10,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 10,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 10,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 10,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 10,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 10,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 10,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 10,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 11,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 11,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 11,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 11,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 11,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 11,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 11,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 11,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 11,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 12,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 12,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 12,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 12,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 12,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 12,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 12,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 12,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 12,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 13,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 13,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 13,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 13,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 13,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 13,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 13,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 13,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 13,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 14,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 14,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 14,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 14,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 14,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 14,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 14,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 14,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 14,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 15,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 15,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 15,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 15,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 15,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 15,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 15,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 15,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 16,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 16,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 16,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 16,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 16,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 16,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 16,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 16,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 17,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 17,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 17,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 17,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 17,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 17,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 17,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 17,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 18,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 18,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 18,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 18,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 18,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 18,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 18,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 18,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 19,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 19,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 19,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 19,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 19,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 19,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 19,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 19,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 20,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 20,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 20,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 20,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 20,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 20,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 20,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 20,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 21,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 21,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 21,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 21,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 21,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 21,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 21,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 21,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 22,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 22,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 22,
+      "kind": "blanked_local_image_path",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 22,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 22,
+      "kind": "blanked_local_image_path",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 22,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 22,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 22,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    }
+  ]
+}

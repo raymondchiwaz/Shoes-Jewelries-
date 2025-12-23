@@ -1,0 +1,279 @@
+{
+  "input": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\product-import-clean.csv",
+  "output": "C:\\Users\\Administrator\\Documents\\GitHub\\Shoes-Jewelries-\\product-import-final.csv",
+  "expectedCols": 40,
+  "issues": [
+    {
+      "row": 2,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 2,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 3,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 3,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 3,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 4,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 4,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 4,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 5,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 5,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 5,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 6,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 6,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 6,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 7,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 7,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 7,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 8,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 8,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 9,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 9,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 9,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 10,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 10,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 10,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 11,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 11,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 11,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 12,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 12,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 12,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 13,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 13,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 13,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 14,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 14,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 14,
+      "kind": "inferred_variant_price_usd"
+    },
+    {
+      "row": 15,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 15,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 15,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 15,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 15,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 16,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 16,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 16,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 16,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 16,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 17,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 17,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 18,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 18,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 19,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 19,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 19,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 19,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 19,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 20,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 20,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 21,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 21,
+      "kind": "filled_variant_sku"
+    },
+    {
+      "row": 21,
+      "kind": "placeholder_image",
+      "col": "Product Thumbnail"
+    },
+    {
+      "row": 21,
+      "kind": "placeholder_image",
+      "col": "Product Image 1 Url"
+    },
+    {
+      "row": 21,
+      "kind": "placeholder_image",
+      "col": "Product Image 2 Url"
+    },
+    {
+      "row": 22,
+      "kind": "filled_variant_title"
+    },
+    {
+      "row": 22,
+      "kind": "filled_variant_sku"
+    }
+  ]
+}

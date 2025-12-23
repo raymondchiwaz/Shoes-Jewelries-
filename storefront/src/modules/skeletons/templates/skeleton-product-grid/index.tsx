@@ -1,15 +1,16 @@
+import { Layout, LayoutColumn } from "@/components/Layout"
 import repeat from "@lib/util/repeat"
 import SkeletonProductPreview from "@modules/skeletons/components/skeleton-product-preview"
 
 const SkeletonProductGrid = () => {
   return (
-    <ul className="grid grid-cols-2 small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8 flex-1" data-testid="products-list-loader">
-      {repeat(8).map((index) => (
-        <li key={index}>
+    <Layout className="gap-y-10 md:gap-y-16 mb-16 md:mb-20">
+      {repeat(9).map((index) => (
+        <LayoutColumn className="md:!col-span-4 !col-span-6" key={index}>
           <SkeletonProductPreview />
-        </li>
+        </LayoutColumn>
       ))}
-    </ul>
+    </Layout>
   )
 }
 

@@ -5,8 +5,8 @@ const SkeletonOrderSummary = () => {
   return (
     <div className="grid-cols-1">
       <SkeletonCartTotals header={false} />
-      <div className="mt-4">
-        <SkeletonButton />
+      <div className="mt-6">
+        <SkeletonButton className="w-full" />
       </div>
     </div>
   )

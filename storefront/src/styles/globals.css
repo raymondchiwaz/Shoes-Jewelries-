@@ -3,20 +3,17 @@
 @import "tailwindcss/utilities";
 
 @layer base {
-  * {
-    @apply border-grey-20;
-  }
-
   html {
-    scroll-behavior: smooth;
+    @apply text-black font-normal;
   }
 
-  body {
-    @apply bg-white text-grey-90 antialiased;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    letter-spacing: 0.3px;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-medium;
   }
 }
 
@@ -31,134 +28,20 @@
   }
 
   .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  input:focus ~ label,
-  input:not(:placeholder-shown) ~ label {
-    @apply -translate-y-2 text-xsmall-regular;
-  }
-
-  input:focus ~ label {
-    @apply left-0;
-  }
-
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  textarea:-webkit-autofill,
-  textarea:-webkit-autofill:hover,
-  textarea:-webkit-autofill:focus,
-  select:-webkit-autofill,
-  select:-webkit-autofill:hover,
-  select:-webkit-autofill:focus {
-    border: 1px solid #212121;
-    -webkit-text-fill-color: #212121;
-    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
-    transition: background-color 5000s ease-in-out 0s;
-  }
-
-  input[type="search"]::-webkit-search-decoration,
-  input[type="search"]::-webkit-search-cancel-button,
-  input[type="search"]::-webkit-search-results-button,
-  input[type="search"]::-webkit-search-results-decoration {
-    -webkit-appearance: none;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 }
 
 @layer components {
-  /* Nordstrom Container - exact width matching Nordstrom */
   .content-container {
-    @apply max-w-[1440px] w-full mx-auto px-6 md:px-8 lg:px-12;
+    @apply max-w-[1440px] w-full mx-auto px-6;
   }
 
-  .nordstrom-container {
-    @apply max-w-[1440px] w-full mx-auto px-4 md:px-6 lg:px-8;
-  }
-
-  /* Nordstrom Button Styles */
   .contrast-btn {
     @apply px-4 py-2 border border-black rounded-full hover:bg-black hover:text-white transition-colors duration-200 ease-in;
   }
 
-  .btn-nordstrom-black {
-    @apply bg-grey-90 text-grey-0 px-6 md:px-8 py-3 md:py-4 uppercase text-xs md:text-sm tracking-wider font-semibold hover:bg-grey-80 transition-all duration-200 ease-in-out;
-  }
-
-  .btn-nordstrom-outline {
-    @apply border-2 border-grey-90 text-grey-90 px-6 md:px-8 py-2 md:py-3 uppercase text-xs md:text-sm tracking-wider font-semibold hover:bg-grey-90 hover:text-grey-0 transition-all duration-200 ease-in-out;
-  }
-
-  .btn-nordstrom-white {
-    @apply bg-grey-0 text-grey-90 px-6 md:px-8 py-3 md:py-4 uppercase text-xs md:text-sm tracking-wider font-semibold border border-grey-30 hover:border-grey-90 transition-all duration-200 ease-in-out;
-  }
-
-  /* Navigation Links */
-  .nav-link-primary {
-    /* Base structure only; color handled dynamically in component */
-    @apply text-xs md:text-sm uppercase tracking-wider font-semibold transition-colors duration-200 ease-in-out relative pb-2;
-  }
-
-  .nav-link-secondary {
-    @apply text-xs leading-5 font-normal text-grey-60 hover:text-grey-90 transition-colors duration-200;
-  }
-
-  /* Header & Navigation Styling */
-  .header-sticky {
-    /* Transparent overlay header fixed to top */
-    @apply fixed top-0 left-0 right-0 z-50 bg-transparent border-b border-transparent transition-shadow duration-300;
-  }
-
-  .header-sticky-shadow {
-    @apply shadow-sm;
-  }
-
-  /* Mega Menu */
-  .mega-menu {
-    @apply absolute left-0 right-0 top-full bg-white border-t border-grey-20 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-in-out z-50 py-8 md:py-12;
-  }
-
-  .mega-menu-column {
-    @apply space-y-4;
-  }
-
-  .mega-menu-title {
-    @apply text-xs font-bold uppercase tracking-widest text-grey-90 mb-4;
-  }
-
-  /* Ticker (marquee) styles */
-  .ticker {
-    @apply relative w-full overflow-hidden;
-  }
-  .ticker-track {
-    @apply absolute inset-0 flex items-center gap-20 md:gap-24 whitespace-nowrap;
-    will-change: transform;
-  }
-  .ticker-item {
-    @apply text-[11px] md:text-xs uppercase tracking-[0.2em] font-medium;
-  }
-  .ticker-sep {
-    @apply opacity-60 text-[11px] md:text-xs;
-  }
-  @keyframes marquee {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
-  }
-  .animate-marquee {
-    animation: marquee 44s linear infinite;
-  }
-  .animate-marquee2 {
-    animation: marquee 44s linear infinite;
-    animation-delay: 22s;
-  }
-  /* Pause on hover for readability */
-  .ticker:hover .animate-marquee,
-  .ticker:hover .animate-marquee2 {
-    animation-play-state: paused;
-  }
-
-  /* Typography Scale - Nordstrom Brand */
   .text-xsmall-regular {
     @apply text-[10px] leading-4 font-normal;
   }
@@ -172,8 +55,7 @@
   }
 
   .text-base-regular {
-    @apply text-sm leading-7 font-normal;  /* Changed from leading-6 to leading-7 */
-    letter-spacing: 0.01em;
+    @apply text-sm leading-6 font-normal;
   }
 
   .text-base-semi {
@@ -181,8 +63,7 @@
   }
 
   .text-large-regular {
-    @apply text-base leading-7 font-normal;  /* Changed from leading-6 to leading-7 */
-    letter-spacing: 0.01em;
+    @apply text-base leading-6 font-normal;
   }
 
   .text-large-semi {
@@ -190,8 +71,7 @@
   }
 
   .text-xl-regular {
-    @apply text-2xl leading-10 font-normal;  /* Changed from leading-[36px] */
-    letter-spacing: -0.01em;
+    @apply text-2xl leading-[36px] font-normal;
   }
 
   .text-xl-semi {
@@ -199,8 +79,7 @@
   }
 
   .text-2xl-regular {
-    @apply text-[30px] leading-[54px] font-normal;  /* Increased line-height */
-    letter-spacing: -0.01em;
+    @apply text-[30px] leading-[48px] font-normal;
   }
 
   .text-2xl-semi {
@@ -208,304 +87,62 @@
   }
 
   .text-3xl-regular {
-    @apply text-[32px] leading-[52px] font-normal;  /* Increased line-height */
-    letter-spacing: -0.02em;
+    @apply text-[32px] leading-[44px] font-normal;
   }
 
   .text-3xl-semi {
     @apply text-[32px] leading-[44px] font-semibold;
   }
 
-  /* Hero Section - Nordstrom Style */
-  .hero-section {
-    @apply relative w-full bg-grey-0 py-12 md:py-24 lg:py-32;
+  .article {
+    h1 {
+      @apply text-2xl;
+    }
+
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply text-md mt-16 mb-8;
+    }
+
+    p,
+    ul {
+      @apply mb-4;
+    }
+
+    ul,
+    ol {
+      @apply pl-5;
+    }
+
+    ul {
+      @apply list-disc;
+    }
+
+    ol {
+      @apply list-decimal;
+
+      ul {
+        @apply mt-4 pl-0;
+      }
+
+      > li {
+        @apply pl-1;
+      }
+
+      > li + li {
+        @apply mt-5;
+      }
+    }
   }
 
-  .hero-content {
-    @apply text-center max-w-3xl mx-auto px-4;
+  .txt-medium {
+    @apply text-[1.875rem] leading-[1.3125rem] font-normal font-inter;
   }
 
-  .hero-title {
-    /* Removed old definition to consolidate with luxury styles defined later */
+  .txt-xlarge-plus {
+    @apply text-[1.125rem] leading-[1.6875rem] font-medium font-inter;
   }
-
-  .hero-subtitle {
-    @apply text-base md:text-xl font-light text-grey-60 mb-6 md:mb-8;
-  }
-
-  /* Product Grid - Nordstrom Style */
-  .product-grid {
-    @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6;
-  }
-
-  .product-card {
-    @apply group cursor-pointer transition-all duration-300 ease-in-out;
-  }
-
-  .product-image {
-    @apply aspect-[3/4] overflow-hidden bg-grey-10 mb-3 md:mb-4;
-  }
-
-  .product-image img {
-    @apply w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out;
-  }
-
-  .product-info {
-    @apply space-y-2;
-  }
-
-  .product-title {
-    @apply text-xs md:text-sm leading-5 font-normal text-grey-90 line-clamp-2 group-hover:underline;
-  }
-
-  .product-price {
-    @apply text-xs md:text-sm font-semibold text-grey-90;
-  }
-
-  /* Section Spacing */
-  .section-spacing {
-    @apply py-8 md:py-12 lg:py-16;
-  }
-
-  .section-title {
-    /* Removed old definition to consolidate with luxury styles defined later */
-  }
-
-  /* Footer Styling */
-  .footer-section {
-    @apply border-t border-grey-20 bg-white py-12 md:py-16;
-  }
-
-  .footer-column-title {
-    @apply text-xs font-bold uppercase tracking-widest text-grey-90 mb-4;
-  }
-
-  .footer-link {
-    @apply text-xs leading-6 text-grey-60 hover:text-grey-90 transition-colors duration-200;
-  }
-
-  /* Loading & Animations */
-  .loading-skeleton {
-    @apply bg-grey-10 animate-pulse rounded;
-  }
-
-  /* Borders & Dividers */
-  .divider {
-    @apply border-b border-grey-20;
-  }
-
-  /* Focus States */
-  .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-grey-90 focus:ring-offset-2;
-  }
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-grey-5;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-grey-30 rounded;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-grey-40;
-}
-
-/* Print Styles */
-@media print {
-  .no-print {
-    display: none;
-  }
-}
-
-/* ============================================
-   LUXURY TYPOGRAPHY & SPACING ENHANCEMENTS
-   ============================================ */
-
-/* Base HTML Improvements */
-html {
-  @apply antialiased;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-body {
-  @apply text-base;
-  letter-spacing: 0.01em;
-  line-height: 1.8;
-}
-
-/* Luxury Heading Styles */
-h1, h2, h3, h4, h5, h6 {
-  @apply font-display;
-  letter-spacing: -0.02em;
-  font-weight: 400; /* Light weight for luxury feel */
-}
-
-h1 {
-  @apply text-5xl md:text-6xl lg:text-7xl;
-  line-height: 1.1;
-}
-
-h2 {
-  @apply text-4xl md:text-5xl;
-  line-height: 1.2;
-}
-
-h3 {
-  @apply text-3xl md:text-4xl;
-  line-height: 1.3;
-}
-
-h4 {
-  @apply text-2xl md:text-3xl;
-  line-height: 1.4;
-}
-
-/* Paragraph Spacing */
-p {
-  @apply mb-6;
-  line-height: 1.8;
-  letter-spacing: 0.01em;
-}
-
-/* Link Styles (Luxury) */
-a {
-  @apply transition-all duration-300 ease-in-out;
-}
-
-a:hover {
-  @apply opacity-80;
-}
-
-/* Button Base Styles */
-button {
-  @apply transition-all duration-300 ease-in-out;
-  letter-spacing: 0.05em;
-}
-
-/* Nordstrom-style Container */
-.nordstrom-container {
-  @apply max-w-[1440px] w-full mx-auto px-6 md:px-8 lg:px-12;
-}
-
-/* Luxury Section Spacing */
-.section-luxury {
-  @apply py-20 md:py-32 lg:py-40;
-}
-
-/* Hero Text Styles */
-.hero-title {
-  @apply font-display text-5xl md:text-6xl lg:text-7xl font-light tracking-tight;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-}
-
-  .hero-subtitle {
-    @apply text-lg md:text-xl lg:text-2xl font-light text-grey-60;
-    line-height: 1.8;
-    letter-spacing: 0.01em;
-  }
-
-  /* MORPHEUS hero typographic system */
-  .hero-brand {
-    @apply text-white uppercase font-extrabold tracking-[0.1em];
-    letter-spacing: 0.1em;
-    line-height: 0.9;
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-  }
-  .hero-headline {
-    @apply text-white uppercase font-bold leading-[0.95];
-  }
-  .hero-offer {
-    @apply text-white uppercase font-bold leading-[0.95];
-  }
-  .hero-sub {
-    @apply text-white uppercase font-semibold leading-[0.95];
-  }
-
-  /* Nav link hover underline micro-interactions */
-  .nav-link-primary::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 2px;
-    width: 0;
-    background-color: #111827; /* grey-90 */
-    transition: width 200ms ease-in-out;
-  }
-  .nav-link-primary:hover::after {
-    width: 100%;
-  }
-
-/* Section Title Styles */
-.section-title {
-  @apply font-display text-4xl md:text-5xl font-light tracking-tight text-grey-90 mb-6;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-}
-
-/* Luxury Button Styles */
-.btn-nordstrom-black {
-  @apply bg-grey-90 hover:bg-grey-80 text-white px-8 py-4 rounded-lg font-semibold uppercase tracking-wider transition-all shadow-md hover:shadow-xl;
-  letter-spacing: 0.1em;
-}
-
-.btn-nordstrom-outline {
-  @apply border-2 border-grey-90 hover:bg-grey-90 text-grey-90 hover:text-white px-8 py-4 rounded-lg font-semibold uppercase tracking-wider transition-all;
-  letter-spacing: 0.1em;
-}
-
-/* Hero soft buttons (visible on dark images, subtle by default) */
-.btn-hero-soft {
-  @apply bg-white/10 border border-white/70 text-white hover:bg-white hover:text-grey-90 hover:shadow-xl px-8 py-4 rounded-lg font-semibold uppercase tracking-wider transition-all backdrop-blur-sm;
-  letter-spacing: 0.1em;
-}
-
-.btn-nordstrom-gold {
-  @apply bg-gradient-to-r from-luxury-gold to-luxury-gold-dark hover:shadow-2xl text-white px-8 py-4 rounded-lg font-semibold transition-all;
-  letter-spacing: 0.05em;
-}
-
-/* Product Card Styles */
-.product-card {
-  @apply transition-all duration-500 ease-in-out hover:-translate-y-2 hover:shadow-xl;
-}
-
-.product-card-image {
-  @apply transition-transform duration-500 ease-in-out group-hover:scale-105;
-}
-
-/* Luxury Text Utilities */
-.text-luxury-light {
-  font-weight: 300;
-  letter-spacing: 0.02em;
-}
-
-.text-luxury-caps {
-  @apply uppercase tracking-widest text-xs font-semibold;
-  letter-spacing: 0.15em;
-}
-
-/* Smooth Scroll */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Selection Color (Brand) */
-::selection {
-  @apply bg-luxury-gold text-white;
-}
-
-::-moz-selection {
-  @apply bg-luxury-gold text-white;
 }

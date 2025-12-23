@@ -1,14 +1,14 @@
-import { Container, clx } from "@medusajs/ui"
+import * as React from "react"
 import Image from "next/image"
-import React from "react"
+import type { HttpTypes } from "@medusajs/types"
+import { twMerge } from "tailwind-merge"
 
 import PlaceholderImage from "@modules/common/icons/placeholder-image"
 
 type ThumbnailProps = {
-  thumbnail?: string | null
-  // TODO: Fix image typings
-  images?: any[] | null
-  size?: "small" | "medium" | "large" | "full" | "square"
+  thumbnail?: HttpTypes.StoreProduct["thumbnail"]
+  images?: HttpTypes.StoreProduct["images"]
+  size?: "small" | "medium" | "large" | "full" | "square" | "3/4"
   isFeatured?: boolean
   className?: string
   "data-testid"?: string
@@ -25,24 +25,23 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
   const initialImage = thumbnail || images?.[0]?.url
 
   return (
-    <Container
-      className={clx(
-        "relative w-full overflow-hidden p-2 bg-ui-bg-subtle rounded-large border border-ui-border-base hover:border-ui-border-strong transition-colors",
+    <div
+      className={twMerge(
+        "relative w-full overflow-hidden",
         className,
-        {
-          "aspect-[11/14]": isFeatured,
-          "aspect-[9/16]": !isFeatured && size !== "square",
-          "aspect-[1/1]": size === "square",
-          "w-[180px]": size === "small",
-          "w-[290px]": size === "medium",
-          "w-[440px]": size === "large",
-          "w-full": size === "full",
-        }
+        isFeatured && "aspect-[11/14]",
+        !isFeatured && size !== "square" && size !== "3/4" && "aspect-[9/16]",
+        size === "square" && "aspect-[1/1]",
+        size === "3/4" && "aspect-[3/4]",
+        size === "small" && "w-[180px]",
+        size === "medium" && "w-[290px]",
+        size === "large" && "w-[440px]",
+        size === "full" && "w-full"
       )}
       data-testid={dataTestid}
     >
       <ImageOrPlaceholder image={initialImage} size={size} />
-    </Container>
+    </div>
   )
 }
 

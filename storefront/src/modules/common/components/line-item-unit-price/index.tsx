@@ -1,53 +1,46 @@
 import { getPricesForVariant } from "@lib/util/get-product-price"
 import { HttpTypes } from "@medusajs/types"
-import { clx } from "@medusajs/ui"
+import { twMerge } from "tailwind-merge"
 
 type LineItemUnitPriceProps = {
   item: HttpTypes.StoreCartLineItem | HttpTypes.StoreOrderLineItem
-  style?: "default" | "tight"
+  className?: string
+  regularPriceClassName?: string
 }
 
 const LineItemUnitPrice = ({
   item,
-  style = "default",
+  className,
+  regularPriceClassName,
 }: LineItemUnitPriceProps) => {
   const {
     original_price,
     calculated_price,
     original_price_number,
     calculated_price_number,
-    percentage_diff,
-  } = getPricesForVariant(item.variant) ?? {}
-  const hasReducedPrice = calculated_price_number < original_price_number
+  } = item.variant ? (getPricesForVariant(item.variant) ?? {}) : {}
+  const hasReducedPrice =
+    (calculated_price_number ?? 0) < (original_price_number ?? 0)
 
   return (
-    <div className="flex flex-col text-ui-fg-muted justify-center h-full">
-      {hasReducedPrice && (
+    <div className={className}>
+      {hasReducedPrice ? (
         <>
-          <p>
-            {style === "default" && (
-              <span className="text-ui-fg-muted">Original: </span>
-            )}
-            <span
-              className="line-through"
-              data-testid="product-unit-original-price"
-            >
-              {original_price}
-            </span>
+          <p className="text-base sm:text-sm font-semibold text-red-primary">
+            {calculated_price}
           </p>
-          {style === "default" && (
-            <span className="text-ui-fg-interactive">-{percentage_diff}%</span>
-          )}
+          <p className="text-grayscale-500 line-through">{original_price}</p>
         </>
+      ) : (
+        <p
+          className={twMerge(
+            "text-xs sm:text-sm font-semibold",
+            regularPriceClassName
+          )}
+        >
+          {calculated_price}
+        </p>
       )}
-      <span
-        className={clx("text-base-regular", {
-          "text-ui-fg-interactive": hasReducedPrice,
-        })}
-        data-testid="product-unit-price"
-      >
-        {calculated_price}
-      </span>
     </div>
   )
 }

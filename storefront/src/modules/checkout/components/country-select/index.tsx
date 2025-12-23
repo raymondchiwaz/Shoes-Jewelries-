@@ -1,23 +1,28 @@
-import { forwardRef, useImperativeHandle, useMemo, useRef } from "react"
+"use client"
 
-import NativeSelect, {
-  NativeSelectProps,
-} from "@modules/common/components/native-select"
+import { useMemo } from "react"
+
 import { HttpTypes } from "@medusajs/types"
+import * as ReactAria from "react-aria-components"
+import {
+  UiSelectButton,
+  UiSelectIcon,
+  UiSelectListBox,
+  UiSelectListBoxItem,
+  UiSelectValue,
+} from "@/components/ui/Select"
 
-const CountrySelect = forwardRef<
-  HTMLSelectElement,
-  NativeSelectProps & {
-    region?: HttpTypes.StoreRegion
-  }
->(({ placeholder = "Country", region, defaultValue, ...props }, ref) => {
-  const innerRef = useRef<HTMLSelectElement>(null)
+export type CountrySelectProps = ReactAria.SelectProps<
+  Exclude<HttpTypes.StoreRegion["countries"], undefined>[number]
+> & {
+  region?: HttpTypes.StoreRegion
+}
 
-  useImperativeHandle<HTMLSelectElement | null, HTMLSelectElement | null>(
-    ref,
-    () => innerRef.current
-  )
-
+const CountrySelect: React.FC<CountrySelectProps> = ({
+  placeholder = "Country",
+  region,
+  ...props
+}) => {
   const countryOptions = useMemo(() => {
     if (!region) {
       return []
@@ -30,20 +35,27 @@ const CountrySelect = forwardRef<
   }, [region])
 
   return (
-    <NativeSelect
-      ref={innerRef}
-      placeholder={placeholder}
-      defaultValue={defaultValue}
+    <ReactAria.Select
+      aria-label="Select country"
       {...props}
+      placeholder={placeholder}
     >
-      {countryOptions?.map(({ value, label }, index) => (
-        <option key={index} value={value}>
-          {label}
-        </option>
-      ))}
-    </NativeSelect>
+      <UiSelectButton className="!h-14">
+        <UiSelectValue className="text-base" />
+        <UiSelectIcon />
+      </UiSelectButton>
+      <ReactAria.Popover className="w-[--trigger-width]">
+        <UiSelectListBox>
+          {countryOptions?.map(({ value, label }, index) => (
+            <UiSelectListBoxItem key={index} id={value}>
+              {label}
+            </UiSelectListBoxItem>
+          ))}
+        </UiSelectListBox>
+      </ReactAria.Popover>
+    </ReactAria.Select>
   )
-})
+}
 
 CountrySelect.displayName = "CountrySelect"
 

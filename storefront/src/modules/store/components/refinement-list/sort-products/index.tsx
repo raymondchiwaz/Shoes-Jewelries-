@@ -1,47 +1,52 @@
 "use client"
 
-import FilterRadioGroup from "@modules/common/components/filter-radio-group"
+import * as ReactAria from "react-aria-components"
+import {
+  UiSelectButton,
+  UiSelectIcon,
+  UiSelectListBox,
+  UiSelectListBoxItem,
+  UiSelectValue,
+} from "@/components/ui/Select"
 
 export type SortOptions = "price_asc" | "price_desc" | "created_at"
 
 type SortProductsProps = {
-  sortBy: SortOptions
+  sortBy: SortOptions | undefined
   setQueryParams: (name: string, value: SortOptions) => void
-  "data-testid"?: string
 }
 
-const sortOptions = [
-  {
-    value: "created_at",
-    label: "Latest Arrivals",
-  },
-  {
-    value: "price_asc",
-    label: "Price: Low -> High",
-  },
-  {
-    value: "price_desc",
-    label: "Price: High -> Low",
-  },
-]
-
-const SortProducts = ({
-  "data-testid": dataTestId,
-  sortBy,
-  setQueryParams,
-}: SortProductsProps) => {
+const SortProducts = ({ sortBy, setQueryParams }: SortProductsProps) => {
   const handleChange = (value: SortOptions) => {
     setQueryParams("sortBy", value)
   }
 
   return (
-    <FilterRadioGroup
-      title="Sort by"
-      items={sortOptions}
-      value={sortBy}
-      handleChange={handleChange}
-      data-testid={dataTestId}
-    />
+    <ReactAria.Select
+      placeholder="Sort by"
+      selectedKey={sortBy || "sortBy"}
+      onSelectionChange={(key) => {
+        handleChange(key as SortOptions)
+      }}
+      className="max-md:hidden"
+      aria-label="Sort by"
+    >
+      <UiSelectButton>
+        <UiSelectValue />
+        <UiSelectIcon />
+      </UiSelectButton>
+      <ReactAria.Popover className="w-60" placement="bottom right">
+        <UiSelectListBox>
+          <UiSelectListBoxItem id="created_at">
+            Latest Arrivals
+          </UiSelectListBoxItem>
+          <UiSelectListBoxItem id="price_asc">Lowest price</UiSelectListBoxItem>
+          <UiSelectListBoxItem id="price_desc">
+            Highest price
+          </UiSelectListBoxItem>
+        </UiSelectListBox>
+      </ReactAria.Popover>
+    </ReactAria.Select>
   )
 }
 

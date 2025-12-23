@@ -1,25 +1,24 @@
-import { instantMeiliSearch } from "@meilisearch/instant-meilisearch"
+import { MeiliSearch } from "meilisearch"
 
-const endpoint =
-  process.env.NEXT_PUBLIC_SEARCH_ENDPOINT || "http://127.0.0.1:7700"
+export const SEARCH_ENDPOINT = process.env.NEXT_PUBLIC_SEARCH_ENDPOINT ?? ""
 
-const apiKey = process.env.NEXT_PUBLIC_SEARCH_API_KEY || "test_key"
+const apiKey = process.env.NEXT_PUBLIC_SEARCH_API_KEY ?? ""
 
-export const searchClient = instantMeiliSearch(endpoint, apiKey)
+export interface MeiliSearchProductHit {
+  id: string
+  handle: string
+  title: string
+  thumbnail: string
+  variants: string[]
+}
 
-export const SEARCH_INDEX_NAME =
-  process.env.NEXT_PUBLIC_INDEX_NAME || "products"
-
-// If you want to use Algolia instead then uncomment the following lines, and delete the above lines
-// you should also install algoliasearch - yarn add algoliasearch
-
-// import algoliasearch from "algoliasearch/lite"
-
-// const appId = process.env.NEXT_PUBLIC_SEARCH_APP_ID || "test_app_id"
-
-// const apiKey = process.env.NEXT_PUBLIC_SEARCH_API_KEY || "test_key"
-
-// export const searchClient = algoliasearch(appId, apiKey)
-
-// export const SEARCH_INDEX_NAME =
-//   process.env.NEXT_PUBLIC_INDEX_NAME || "products"
+/**
+ * Search is optional. If you don't configure MeiliSearch/Algolia, we keep this `null`
+ * to avoid browser-side requests to a non-existent local service (e.g. localhost:7700).
+ */
+export const searchClient = SEARCH_ENDPOINT
+  ? new MeiliSearch({
+      host: SEARCH_ENDPOINT,
+      apiKey,
+    })
+  : null

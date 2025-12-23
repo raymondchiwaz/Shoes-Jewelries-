@@ -1,64 +1,72 @@
 "use client"
 
-import { Heading, Text, clx } from "@medusajs/ui"
+import { twJoin } from "tailwind-merge"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
-import PaymentButton from "../payment-button"
-import { Button } from "@medusajs/ui"
-import { useState } from "react"
-import WhatsAppCheckoutModal from "../whatsapp-checkout-modal"
-import { useSearchParams } from "next/navigation"
+import { Button } from "@/components/Button"
+import PaymentButton from "@modules/checkout/components/payment-button"
+import { StoreCart } from "@medusajs/types"
 
-const Review = ({ cart }: { cart: any }) => {
+const Review = ({ cart }: { cart: StoreCart }) => {
   const searchParams = useSearchParams()
-  const [whatsappOpen, setWhatsappOpen] = useState(false)
+  const router = useRouter()
+  const pathname = usePathname()
 
   const isOpen = searchParams.get("step") === "review"
 
-  const paidByGiftcard =
-    cart?.gift_cards && cart?.gift_cards?.length > 0 && cart?.total === 0
+  // Check if ShipRank carrier is saved in cart metadata
+  const hasShipRankCarrier = cart?.metadata?.shiprank_carrier ? true : false
 
+  // const paidByGiftcard =
+  //   cart?.gift_cards && cart?.gift_cards?.length > 0 && cart?.total === 0
   const previousStepsCompleted =
     cart.shipping_address &&
+    cart.shipping_methods &&
     cart.shipping_methods.length > 0 &&
-    (cart.payment_collection || paidByGiftcard)
-
+    (cart.payment_collection?.payment_sessions?.length ?? 0) > 0
   return (
-    <div className="bg-white">
-      <div className="flex flex-row items-center justify-between mb-6">
-        <Heading
-          level="h2"
-          className={clx(
-            "flex flex-row text-3xl-regular gap-x-2 items-baseline",
-            {
-              "opacity-50 pointer-events-none select-none": !isOpen,
-            }
+    <>
+      <div className="flex justify-between mb-6 md:mb-8 border-t border-grayscale-200 pt-8 mt-8">
+        <div>
+          <p
+            className={twJoin(
+              "transition-fontWeight duration-75",
+              isOpen && "font-semibold"
+            )}
+          >
+            5. Review
+          </p>
+        </div>
+        {!isOpen &&
+          previousStepsCompleted &&
+          cart?.shipping_address &&
+          cart?.billing_address &&
+          cart?.email && (
+            <Button
+              variant="link"
+              onPress={() => {
+                router.push(pathname + "?step=review", { scroll: false })
+              }}
+            >
+              View
+            </Button>
           )}
-        >
-          Review
-        </Heading>
       </div>
       {isOpen && previousStepsCompleted && (
         <>
-          <div className="flex items-start gap-x-1 w-full mb-6">
-            <div className="w-full">
-              <Text className="txt-medium-plus text-ui-fg-base mb-1">
-                By clicking the Place Order button, you confirm that you have
-                read, understand and accept our Terms of Use, Terms of Sale and
-                Returns Policy and acknowledge that you have read Medusa
-                Store&apos;s Privacy Policy.
-              </Text>
-            </div>
-          </div>
-          <div className="flex gap-4">
-            <PaymentButton cart={cart} data-testid="submit-order-button" />
-            <Button variant="secondary" onClick={() => setWhatsappOpen(true)} data-testid="whatsapp-checkout-button">
-              Checkout via WhatsApp
-            </Button>
-          </div>
-          <WhatsAppCheckoutModal isOpen={whatsappOpen} close={() => setWhatsappOpen(false)} cart={cart} />
+          <p className="mb-8">
+            By clicking the Place Order button, you confirm that you have read,
+            understand and accept our Terms of Use, Terms of Sale and Returns
+            Policy and acknowledge that you have read Medusa Store&apos;s
+            Privacy Policy.
+          </p>
+          <PaymentButton
+            cart={cart}
+            data-testid="submit-order-button"
+          />
         </>
       )}
-    </div>
+    </>
   )
 }
 

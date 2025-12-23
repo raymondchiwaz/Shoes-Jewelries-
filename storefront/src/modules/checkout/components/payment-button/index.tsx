@@ -9,7 +9,7 @@ import ErrorMessage from "../error-message"
 import Spinner from "@modules/common/icons/spinner"
 import { placeOrder } from "@lib/data/cart"
 import { HttpTypes } from "@medusajs/types"
-import { isManual, isPaypal, isStripe } from "@lib/constants"
+import { isManual, isPaypal, isStripe, isPaynow } from "@lib/constants"
 
 type PaymentButtonProps = {
   cart: HttpTypes.StoreCart
@@ -20,12 +20,15 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
   cart,
   "data-testid": dataTestId,
 }) => {
+  // Check if ShipRank carrier is saved in cart metadata
+  const hasShipRankCarrier = cart?.metadata?.shiprank_carrier ? true : false
+
   const notReady =
     !cart ||
     !cart.shipping_address ||
     !cart.billing_address ||
     !cart.email ||
-    (cart.shipping_methods?.length ?? 0) < 1
+    ((cart.shipping_methods?.length ?? 0) < 1 && !hasShipRankCarrier)
 
   // TODO: Add this once gift cards are implemented
   // const paidByGiftcard =
@@ -53,6 +56,14 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
     case isPaypal(paymentSession?.provider_id):
       return (
         <PayPalPaymentButton
+          notReady={notReady}
+          cart={cart}
+          data-testid={dataTestId}
+        />
+      )
+    case isPaynow(paymentSession?.provider_id):
+      return (
+        <PaynowPaymentButton
           notReady={notReady}
           cart={cart}
           data-testid={dataTestId}
@@ -96,7 +107,7 @@ const StripePaymentButton = ({
 
   const onPaymentCompleted = async () => {
     await placeOrder()
-      .catch((err) => {
+      .catch((err: any) => {
         setErrorMessage(err.message)
       })
       .finally(() => {
@@ -203,7 +214,7 @@ const PayPalPaymentButton = ({
 
   const onPaymentCompleted = async () => {
     await placeOrder()
-      .catch((err) => {
+      .catch((err: any) => {
         setErrorMessage(err.message)
       })
       .finally(() => {
@@ -259,13 +270,82 @@ const PayPalPaymentButton = ({
   }
 }
 
-const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
+const PaynowPaymentButton = ({
+  cart,
+  notReady,
+  "data-testid": dataTestId,
+}: {
+  cart: HttpTypes.StoreCart
+  notReady: boolean
+  "data-testid"?: string
+}) => {
+  const [submitting, setSubmitting] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+  const handlePayment = async () => {
+    setSubmitting(true)
+    setErrorMessage(null)
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/paynow`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-publishable-api-key":
+              process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || "",
+          },
+          body: JSON.stringify({
+            cart_id: cart.id,
+            email: cart.email || "guest@example.com",
+          }),
+        }
+      )
+
+      const data = await response.json()
+
+      if (data.redirectUrl) {
+        window.location.href = data.redirectUrl
+      } else {
+        setErrorMessage(
+          data.error || "Failed to initialize Paynow payment"
+        )
+        setSubmitting(false)
+      }
+    } catch (error: any) {
+      setErrorMessage(error.message || "An error occurred")
+      setSubmitting(false)
+    }
+  }
+
+  return (
+    <>
+      <Button
+        disabled={notReady}
+        isLoading={submitting}
+        onClick={handlePayment}
+        size="large"
+        className="bg-[#25D366] hover:bg-[#20BD5A]"
+        data-testid={dataTestId}
+      >
+        Pay with Paynow
+      </Button>
+      <ErrorMessage
+        error={errorMessage}
+        data-testid="paynow-payment-error-message"
+      />
+    </>
+  )
+}
+
+const ManualTestPaymentButton = ({ notReady, dataTestId }: { notReady: boolean, dataTestId?: string }) => {
   const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const onPaymentCompleted = async () => {
     await placeOrder()
-      .catch((err) => {
+      .catch((err: any) => {
         setErrorMessage(err.message)
       })
       .finally(() => {
@@ -286,7 +366,7 @@ const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
         isLoading={submitting}
         onClick={handlePayment}
         size="large"
-        data-testid="submit-order-button"
+        data-testid={dataTestId}
       >
         Place order
       </Button>

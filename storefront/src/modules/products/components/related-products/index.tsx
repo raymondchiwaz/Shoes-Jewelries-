@@ -1,19 +1,12 @@
-import Product from "../product-preview"
+import Product from "@modules/products/components/product-preview"
 import { getRegion } from "@lib/data/regions"
 import { getProductsList } from "@lib/data/products"
 import { HttpTypes } from "@medusajs/types"
+import { Layout, LayoutColumn } from "@/components/Layout"
 
 type RelatedProductsProps = {
   product: HttpTypes.StoreProduct
   countryCode: string
-}
-
-type StoreProductParamsWithTags = HttpTypes.StoreProductParams & {
-  tags?: string[]
-}
-
-type StoreProductWithTags = HttpTypes.StoreProduct & {
-  tags?: { value: string }[]
 }
 
 export default async function RelatedProducts({
@@ -23,22 +16,21 @@ export default async function RelatedProducts({
   const region = await getRegion(countryCode)
 
   if (!region) {
-  const queryParams: StoreProductParamsWithTags = {}
+    return null
   }
 
   // edit this function to define your related products logic
-  const queryParams: StoreProductParamsWithTags = {}
+  const queryParams: HttpTypes.StoreProductListParams = {
+    limit: 3,
+  }
   if (region?.id) {
     queryParams.region_id = region.id
   }
   if (product.collection_id) {
     queryParams.collection_id = [product.collection_id]
   }
-  const productWithTags = product as StoreProductWithTags
-  if (productWithTags.tags) {
-    queryParams.tags = productWithTags.tags
-      .map((t) => t.value)
-      .filter(Boolean) as string[]
+  if (product.tags) {
+    queryParams.tag_id = product.tags.map((t) => t.value).filter(Boolean)
   }
   queryParams.is_giftcard = false
 
@@ -56,23 +48,21 @@ export default async function RelatedProducts({
   }
 
   return (
-    <div className="product-page-constraint">
-      <div className="flex flex-col items-center text-center mb-16">
-        <span className="text-base-regular text-gray-600 mb-6">
-          Related products
-        </span>
-        <p className="text-2xl-regular text-ui-fg-base max-w-lg">
-          You might also want to check out these products.
-        </p>
-      </div>
-
-      <ul className="grid grid-cols-2 small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8">
+    <>
+      <Layout>
+        <LayoutColumn className="mt-26 md:mt-36">
+          <h4 className="text-md md:text-2xl mb-8 md:mb-16">
+            Related products
+          </h4>
+        </LayoutColumn>
+      </Layout>
+      <Layout className="gap-y-10 md:gap-y-16">
         {products.map((product) => (
-          <li key={product.id}>
-            {region && <Product region={region} product={product} />}
-          </li>
+          <LayoutColumn key={product.id} className="!col-span-6 md:!col-span-4">
+            <Product product={product} />
+          </LayoutColumn>
         ))}
-      </ul>
-    </div>
+      </Layout>
+    </>
   )
 }

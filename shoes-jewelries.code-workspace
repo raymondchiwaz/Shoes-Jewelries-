@@ -1,0 +1,15 @@
+{
+  "folders": [
+    {
+      "name": "Backend",
+      "path": "backend"
+    },
+    {
+      "name": "Storefront",
+      "path": "storefront"
+    }
+  ],
+  "settings": {
+    "typescript.tsdk": "storefront/node_modules/typescript/lib"
+  }
+}

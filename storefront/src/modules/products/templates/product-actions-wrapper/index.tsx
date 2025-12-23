@@ -7,9 +7,19 @@ import ProductActions from "@modules/products/components/product-actions"
  */
 export default async function ProductActionsWrapper({
   id,
+  materials,
   region,
 }: {
   id: string
+  materials: {
+    id: string
+    name: string
+    colors: {
+      id: string
+      name: string
+      hex_code: string
+    }[]
+  }[]
   region: HttpTypes.StoreRegion
 }) {
   const [product] = await getProductsById({
@@ -21,5 +31,7 @@ export default async function ProductActionsWrapper({
     return null
   }
 
-  return <ProductActions product={product} region={region} />
+  return (
+    <ProductActions product={product} materials={materials} region={region} />
+  )
 }

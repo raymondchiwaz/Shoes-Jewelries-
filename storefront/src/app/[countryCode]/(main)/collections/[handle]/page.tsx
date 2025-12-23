@@ -9,16 +9,17 @@ import { listRegions } from "@lib/data/regions"
 import { StoreCollection, StoreRegion } from "@medusajs/types"
 import CollectionTemplate from "@modules/collections/templates"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
+import { collectionMetadataCustomFieldsSchema } from "@lib/util/collections"
 
 type Props = {
-  params: { handle: string; countryCode: string }
-  searchParams: {
+  params: Promise<{ handle: string; countryCode: string }>
+  searchParams: Promise<{
+    category?: string | string[]
+    type?: string | string[]
     page?: string
     sortBy?: SortOptions
-  }
+  }>
 }
-
-export const PRODUCT_LIMIT = 12
 
 export async function generateStaticParams() {
   const { collections } = await getCollectionsList()
@@ -52,26 +53,42 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const collection = await getCollectionByHandle(params.handle)
+  const { handle } = await params
+
+  const collection = await getCollectionByHandle(handle, [
+    "id",
+    "title",
+    "metadata",
+  ])
 
   if (!collection) {
     notFound()
   }
 
+  const collectionDetails = collectionMetadataCustomFieldsSchema.safeParse(
+    collection.metadata ?? {}
+  )
+
   const metadata = {
     title: `${collection.title} | Medusa Store`,
-    description: `${collection.title} collection`,
+    description:
+      collectionDetails.success && collectionDetails.data.description
+        ? collectionDetails.data.description
+        : `${collection.title} collection`,
   } as Metadata
 
   return metadata
 }
 
 export default async function CollectionPage({ params, searchParams }: Props) {
-  const { sortBy, page } = searchParams
+  const { handle, countryCode } = await params
+  const { sortBy, page, category, type } = await searchParams
 
-  const collection = await getCollectionByHandle(params.handle).then(
-    (collection: StoreCollection) => collection
-  )
+  const collection = await getCollectionByHandle(handle, [
+    "id",
+    "title",
+    "metadata",
+  ])
 
   if (!collection) {
     notFound()
@@ -82,7 +99,11 @@ export default async function CollectionPage({ params, searchParams }: Props) {
       collection={collection}
       page={page}
       sortBy={sortBy}
-      countryCode={params.countryCode}
+      countryCode={countryCode}
+      category={
+        !category ? undefined : Array.isArray(category) ? category : [category]
+      }
+      type={!type ? undefined : Array.isArray(type) ? type : [type]}
     />
   )
 }

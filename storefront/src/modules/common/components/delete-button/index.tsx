@@ -1,42 +1,22 @@
-import { deleteLineItem } from "@lib/data/cart"
-import { Spinner, Trash } from "@medusajs/icons"
-import { clx } from "@medusajs/ui"
-import { useState } from "react"
+"use client"
+import { Icon } from "@/components/Icon"
+import { withReactQueryProvider } from "@lib/util/react-query"
+import { useDeleteLineItem } from "hooks/cart"
 
-const DeleteButton = ({
-  id,
-  children,
-  className,
-}: {
-  id: string
-  children?: React.ReactNode
-  className?: string
-}) => {
-  const [isDeleting, setIsDeleting] = useState(false)
-
-  const handleDelete = async (id: string) => {
-    setIsDeleting(true)
-    await deleteLineItem(id).catch((err) => {
-      setIsDeleting(false)
-    })
-  }
+const DeleteButton = ({ id }: { id: string }) => {
+  const { mutate, isPending } = useDeleteLineItem()
 
   return (
-    <div
-      className={clx(
-        "flex items-center justify-between text-small-regular",
-        className
-      )}
+    <button
+      type="button"
+      onClick={() => mutate({ lineId: id })}
+      disabled={isPending}
+      className="p-1"
+      aria-label="Delete"
     >
-      <button
-        className="flex gap-x-1 text-ui-fg-subtle hover:text-ui-fg-base cursor-pointer"
-        onClick={() => handleDelete(id)}
-      >
-        {isDeleting ? <Spinner className="animate-spin" /> : <Trash />}
-        <span>{children}</span>
-      </button>
-    </div>
+      <Icon name="trash" className="w-4 h-4 sm:w-6 sm:h-6" />
+    </button>
   )
 }
 
-export default DeleteButton
+export default withReactQueryProvider(DeleteButton)

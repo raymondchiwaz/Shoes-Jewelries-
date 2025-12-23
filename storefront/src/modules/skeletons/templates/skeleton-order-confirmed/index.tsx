@@ -1,20 +1,34 @@
-import SkeletonOrderConfirmedHeader from "@modules/skeletons/components/skeleton-order-confirmed-header"
-import SkeletonOrderInformation from "@modules/skeletons/components/skeleton-order-information"
-import SkeletonOrderItems from "@modules/skeletons/components/skeleton-order-items"
+import { Layout, LayoutColumn } from "@/components/Layout"
+import { Skeleton } from "@/components/ui/Skeleton"
+import SkeletonButton from "@modules/skeletons/components/skeleton-button"
 
 const SkeletonOrderConfirmed = () => {
   return (
-    <div className="bg-gray-50 py-6 min-h-[calc(100vh-64px)] animate-pulse">
-      <div className="content-container flex justify-center">
-        <div className="max-w-4xl h-full bg-white w-full p-10">
-          <SkeletonOrderConfirmedHeader />
-
-          <SkeletonOrderItems />
-
-          <SkeletonOrderInformation />
+    <Layout className="pt-39 pb-36">
+      <LayoutColumn
+        start={{ base: 1, lg: 3, xl: 4 }}
+        end={{ base: 13, lg: 11, xl: 10 }}
+      >
+        <Skeleton className="w-full h-17 mb-6" />
+        <Skeleton className="w-[90%] h-12 mb-4" />
+        <Skeleton className="w-[80%] h-12 mb-4" />
+        <div className="flex flex-col sm:flex-row mt-16 gap-8">
+          <div className="flex-1">
+            <Skeleton className="w-30 h-5 mb-2" />
+            <Skeleton className="w-25 h-5 mb-2" />
+            <Skeleton className="w-20 h-5 mb-2" />
+            <Skeleton className="w-15 h-5" />
+          </div>
+          <div className="flex-1">
+            <Skeleton className="w-30 h-5 mb-2" />
+            <Skeleton className="w-25 h-5 mb-2" />
+            <Skeleton className="w-20 h-5 mb-2" />
+            <Skeleton className="w-15 h-5" />
+          </div>
         </div>
-      </div>
-    </div>
+        <SkeletonButton className="w-full mt-16" />
+      </LayoutColumn>
+    </Layout>
   )
 }
 

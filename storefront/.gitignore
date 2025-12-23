@@ -35,8 +35,6 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
-# Keep template tracked
-!/.env.local.template
 
 # vercel
 .vercel
@@ -45,7 +43,6 @@ yarn-error.log*
 *.tsbuildinfo
 node_modules
 
-.yarn
 .swc
 dump.rdb
 /test-results/

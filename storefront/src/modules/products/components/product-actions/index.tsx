@@ -1,50 +1,93 @@
 "use client"
 
-import { Button } from "@medusajs/ui"
 import { isEqual } from "lodash"
-import { useParams } from "next/navigation"
-import { useEffect, useMemo, useRef, useState } from "react"
-
-import { useIntersection } from "@lib/hooks/use-in-view"
-import Divider from "@modules/common/components/divider"
-import OptionSelect from "@modules/products/components/product-actions/option-select"
-
-import MobileActions from "./mobile-actions"
-import ProductPrice from "../product-price"
-import { addToCart } from "@lib/data/cart"
+import { useEffect, useMemo, useState } from "react"
 import { HttpTypes } from "@medusajs/types"
+import * as ReactAria from "react-aria-components"
+import { getVariantItemsInStock } from "@lib/util/inventory"
+import { Button } from "@/components/Button"
+import { NumberField } from "@/components/NumberField"
+import {
+  UiSelectButton,
+  UiSelectIcon,
+  UiSelectListBox,
+  UiSelectListBoxItem,
+  UiSelectValue,
+} from "@/components/ui/Select"
+import { useCountryCode } from "hooks/country-code"
+import ProductPrice from "@modules/products/components/product-price"
+import { UiRadioGroup } from "@/components/ui/Radio"
+import { withReactQueryProvider } from "@lib/util/react-query"
+import { useAddLineItem } from "hooks/cart"
 
 type ProductActionsProps = {
   product: HttpTypes.StoreProduct
+  materials: {
+    id: string
+    name: string
+    colors: {
+      id: string
+      name: string
+      hex_code: string
+    }[]
+  }[]
   region: HttpTypes.StoreRegion
   disabled?: boolean
 }
 
-const optionsAsKeymap = (variantOptions: any) => {
-  return variantOptions?.reduce((acc: Record<string, string | undefined>, varopt: any) => {
-    if (varopt.option && varopt.value !== null && varopt.value !== undefined) {
-      acc[varopt.option.title] = varopt.value
+const optionsAsKeymap = (
+  variantOptions: HttpTypes.StoreProductVariant["options"]
+) => {
+  return variantOptions?.reduce((acc: Record<string, string>, varopt) => {
+    if (varopt.option_id) {
+      acc[varopt.option_id] = varopt.value
     }
     return acc
   }, {})
 }
 
-export default function ProductActions({
-  product,
-  region,
-  disabled,
-}: ProductActionsProps) {
-  const [options, setOptions] = useState<Record<string, string | undefined>>({})
-  const [isAdding, setIsAdding] = useState(false)
-  const countryCode = useParams().countryCode as string
+const priorityOptions = ["Material", "Color", "Size"]
+
+const getInitialOptions = (product: ProductActionsProps["product"]) => {
+  if (product.variants?.length === 1) {
+    const variantOptions = optionsAsKeymap(product.variants[0].options)
+    return variantOptions ?? {}
+  }
+
+  if (product.options) {
+    const singleOptionValues = product.options
+      .filter((option) => option.values)
+      .filter((option) => option.values!.length === 1)
+      .reduce(
+        (acc, option) => {
+          acc[option.id] = option.values![0].value
+          return acc
+        },
+        {} as Record<string, string>
+      )
+
+    return singleOptionValues
+  }
+
+  return null
+}
+
+function ProductActions({ product, materials, disabled }: ProductActionsProps) {
+  const [options, setOptions] = useState<Record<string, string | undefined>>(
+    getInitialOptions(product) ?? {}
+  )
+  const [quantity, setQuantity] = useState(1)
+  const countryCode = useCountryCode()
+
+  const { mutateAsync, isPending } = useAddLineItem()
 
   // If there is only 1 variant, preselect the options
   useEffect(() => {
-    if (product.variants?.length === 1) {
-      const variantOptions = optionsAsKeymap(product.variants[0].options)
-      setOptions(variantOptions ?? {})
+    const initialOptions = getInitialOptions(product)
+    if (initialOptions) {
+      setOptions(initialOptions)
     }
-  }, [product.variants])
+  }, [product])
 
   const selectedVariant = useMemo(() => {
     if (!product.variants || product.variants.length === 0) {
@@ -58,100 +101,216 @@ export default function ProductActions({
   }, [product.variants, options])
 
   // update the options when a variant is selected
-  const setOptionValue = (title: string, value: string) => {
+  const setOptionValue = (optionId: string, value: string) => {
     setOptions((prev) => ({
       ...prev,
-      [title]: value,
+      [optionId]: value,
     }))
   }
 
   // check if the selected variant is in stock
-  const inStock = useMemo(() => {
-    return !!selectedVariant
-  }, [selectedVariant])
-
-  const actionsRef = useRef<HTMLDivElement>(null)
-
-  const inView = useIntersection(actionsRef, "0px")
+  const itemsInStock = selectedVariant
+    ? getVariantItemsInStock(selectedVariant)
+    : 0
 
   // add the selected variant to the cart
-  const [errorMsg, setErrorMsg] = useState<string | null>(null)
-
   const handleAddToCart = async () => {
     if (!selectedVariant?.id) return null
 
-    setIsAdding(true)
-
-    try {
-      await addToCart({
-        variantId: selectedVariant.id,
-        quantity: 1,
-        countryCode,
-      })
-      setErrorMsg(null)
-    } catch (e: any) {
-      setErrorMsg(e?.message || "Unable to add to cart")
-    } finally {
-      setIsAdding(false)
-    }
+    await mutateAsync({
+      variantId: selectedVariant.id,
+      quantity,
+      countryCode,
+    })
   }
+
+  const hasMultipleVariants = (product.variants?.length ?? 0) > 1
+  const productOptions = (product.options || []).sort((a, b) => {
+    let aPriority = priorityOptions.indexOf(a.title ?? "")
+    let bPriority = priorityOptions.indexOf(b.title ?? "")
+
+    if (aPriority === -1) {
+      aPriority = priorityOptions.length
+    }
+
+    if (bPriority === -1) {
+      bPriority = priorityOptions.length
+    }
+
+    return aPriority - bPriority
+  })
+
+  const materialOption = productOptions.find((o) => o.title === "Material")
+  const colorOption = productOptions.find((o) => o.title === "Color")
+  const otherOptions =
+    materialOption && colorOption
+      ? productOptions.filter(
+          (o) => o.id !== materialOption.id && o.id !== colorOption.id
+        )
+      : productOptions
+
+  const selectedMaterial =
+    materialOption && options[materialOption.id]
+      ? materials.find((m) => m.name === options[materialOption.id])
+      : undefined
+
+  const showOtherOptions =
+    !materialOption ||
+    !colorOption ||
+    (selectedMaterial &&
+      (selectedMaterial.colors.length < 2 || options[colorOption.id]))
 
   return (
     <>
-      <div className="flex flex-col gap-y-2" ref={actionsRef}>
-        <div>
-          {(product.variants?.length ?? 0) > 1 && (
-            <div className="flex flex-col gap-y-4">
-              {(product.options || []).map((option) => {
-                return (
-                  <div key={option.id}>
-                    <OptionSelect
-                      option={option}
-                      current={options[option.title ?? ""]}
-                      updateOption={setOptionValue}
-                      title={option.title ?? ""}
-                      data-testid="product-options"
-                      disabled={!!disabled || isAdding}
-                    />
-                  </div>
-                )
-              })}
-              <Divider />
-            </div>
+      <ProductPrice product={product} variant={selectedVariant} />
+      <div className="max-md:text-xs mb-8 md:mb-16 max-w-120">
+        <p>{product.description}</p>
+      </div>
+      {hasMultipleVariants && (
+        <div className="flex flex-col gap-8 md:gap-6 mb-4 md:mb-26">
+          {materialOption && colorOption && (
+            <>
+              <div>
+                <p className="mb-4">
+                  Materials
+                  {options[materialOption.id] && (
+                    <span className="text-grayscale-500 ml-6">
+                      {options[materialOption.id]}
+                    </span>
+                  )}
+                </p>
+                <ReactAria.Select
+                  selectedKey={options[materialOption.id] ?? null}
+                  onSelectionChange={(value) => {
+                    setOptions({ [materialOption.id]: `${value}` })
+                  }}
+                  placeholder="Choose material"
+                  className="w-full md:w-60"
+                  isDisabled={!!disabled || isPending}
+                  aria-label="Material"
+                >
+                  <UiSelectButton className="!h-12 px-4 gap-2 max-md:text-base">
+                    <UiSelectValue />
+                    <UiSelectIcon className="h-6 w-6" />
+                  </UiSelectButton>
+                  <ReactAria.Popover className="w-[--trigger-width]">
+                    <UiSelectListBox>
+                      {materials.map((material) => (
+                        <UiSelectListBoxItem
+                          key={material.id}
+                          id={material.name}
+                        >
+                          {material.name}
+                        </UiSelectListBoxItem>
+                      ))}
+                    </UiSelectListBox>
+                  </ReactAria.Popover>
+                </ReactAria.Select>
+              </div>
+              {selectedMaterial && (
+                <div className="mb-6">
+                  <p className="mb-4">
+                    Colors
+                    <span className="text-grayscale-500 ml-6">
+                      {options[colorOption.id]}
+                    </span>
+                  </p>
+                  <UiRadioGroup
+                    value={options[colorOption.id] ?? null}
+                    onChange={(value) => {
+                      setOptionValue(colorOption.id, value)
+                    }}
+                    aria-label="Color"
+                    className="flex gap-6"
+                    isDisabled={!!disabled || isPending}
+                  >
+                    {selectedMaterial.colors.map((color) => (
+                      <ReactAria.Radio
+                        key={color.id}
+                        value={color.name}
+                        aria-label={color.name}
+                        className="h-8 w-8 cursor-pointer relative before:transition-colors before:absolute before:content-[''] before:-bottom-2 before:left-0 before:w-full before:h-px data-[selected]:before:bg-black shadow-sm hover:shadow"
+                        style={{ background: color.hex_code }}
+                      />
+                    ))}
+                  </UiRadioGroup>
+                </div>
+              )}
+            </>
           )}
+          {showOtherOptions &&
+            otherOptions.map((option) => {
+              return (
+                <div key={option.id}>
+                  <p className="mb-4">
+                    {option.title}
+                    {options[option.id] && (
+                      <span className="text-grayscale-500 ml-6">
+                        {options[option.id]}
+                      </span>
+                    )}
+                  </p>
+                  <ReactAria.Select
+                    selectedKey={options[option.id] ?? null}
+                    onSelectionChange={(value) => {
+                      setOptionValue(option.id, `${value}`)
+                    }}
+                    placeholder={`Choose ${option.title.toLowerCase()}`}
+                    className="w-full md:w-60"
+                    isDisabled={!!disabled || isPending}
+                    aria-label={option.title}
+                  >
+                    <UiSelectButton className="!h-12 px-4 gap-2 max-md:text-base">
+                      <UiSelectValue />
+                      <UiSelectIcon className="h-6 w-6" />
+                    </UiSelectButton>
+                    <ReactAria.Popover className="w-[--trigger-width]">
+                      <UiSelectListBox>
+                        {(option.values ?? [])
+                          .filter((value) => Boolean(value.value))
+                          .map((value) => (
+                            <UiSelectListBoxItem
+                              key={value.id}
+                              id={value.value}
+                            >
+                              {value.value}
+                            </UiSelectListBoxItem>
+                          ))}
+                      </UiSelectListBox>
+                    </ReactAria.Popover>
+                  </ReactAria.Select>
+                </div>
+              )
+            })}
         </div>
-
-        <ProductPrice product={product} variant={selectedVariant} />
-
+      )}
+      <div className="flex max-sm:flex-col gap-4">
+        <NumberField
+          isDisabled={
+            !itemsInStock || !selectedVariant || !!disabled || isPending
+          }
+          value={quantity}
+          onChange={setQuantity}
+          minValue={1}
+          maxValue={itemsInStock}
+          className="w-full sm:w-35 max-md:justify-center max-md:gap-2"
+          aria-label="Quantity"
+        />
         <Button
-          onClick={handleAddToCart}
-          disabled={!inStock || !selectedVariant || !!disabled || isAdding}
-          variant="primary"
-          className="w-full h-12 text-base font-semibold uppercase tracking-wide"
-          isLoading={isAdding}
-          data-testid="add-product-button"
+          onPress={handleAddToCart}
+          isDisabled={!itemsInStock || !selectedVariant || !!disabled}
+          isLoading={isPending}
+          className="sm:flex-1"
         >
           {!selectedVariant
             ? "Select variant"
-            : !inStock
-            ? "Out of stock"
-            : "Add to cart"}
+            : !itemsInStock
+              ? "Out of stock"
+              : "Add to cart"}
         </Button>
-        {errorMsg && (
-          <div className="text-red-600 text-sm mt-2" data-testid="add-error">{errorMsg}</div>
-        )}
-        <MobileActions
-          product={product}
-          variant={selectedVariant}
-          options={options}
-          updateOptions={setOptionValue}
-          inStock={inStock}
-          handleAddToCart={handleAddToCart}
-          isAdding={isAdding}
-          show={!inView}
-          optionsDisabled={!!disabled || isAdding}
-        />
       </div>
     </>
   )
 }
+
+export default withReactQueryProvider(ProductActions)

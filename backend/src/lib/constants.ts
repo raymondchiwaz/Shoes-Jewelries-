@@ -51,6 +51,21 @@ export const JWT_SECRET = assertValue(
 )
 
 /**
+ * Shipping API URL
+ */
+export const SHIPPING_API_URL = process.env.SHIPPING_API_URL;
+
+/**
+ * Shipping API Key
+ */
+export const SHIPPING_API_KEY = process.env.SHIPPING_API_KEY;
+
+/**
+ * Supabase Anon Key (for ShipRank API)
+ */
+export const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+
+/**
  * Cookie secret used for signing cookies
  */
 export const COOKIE_SECRET = assertValue(

@@ -1,25 +1,32 @@
 import { sdk } from "@lib/config"
 import medusaError from "@lib/util/medusa-error"
-import { cache } from "react"
 import { HttpTypes } from "@medusajs/types"
 
-export const listRegions = cache(async function () {
-  return sdk.store.region
-    .list({}, { next: { tags: ["regions"] } })
+export const listRegions = async function () {
+  return sdk.client
+    .fetch<{ regions: HttpTypes.StoreRegion[] }>(`/store/regions`, {
+      method: "GET",
+      next: { tags: ["regions"] },
+      cache: "force-cache",
+    })
     .then(({ regions }) => regions)
     .catch(medusaError)
-})
+}
 
-export const retrieveRegion = cache(async function (id: string) {
-  return sdk.store.region
-    .retrieve(id, {}, { next: { tags: ["regions"] } })
+export const retrieveRegion = async function (id: string) {
+  return sdk.client
+    .fetch<{ region: HttpTypes.StoreRegion }>(`/store/regions/${id}`, {
+      method: "GET",
+      next: { tags: [`regions`] },
+      cache: "force-cache",
+    })
     .then(({ region }) => region)
     .catch(medusaError)
-})
+}
 
 const regionMap = new Map<string, HttpTypes.StoreRegion>()
 
-export const getRegion = cache(async function (countryCode: string) {
+export const getRegion = async function (countryCode: string) {
   try {
     if (regionMap.has(countryCode)) {
       return regionMap.get(countryCode)
@@ -42,7 +49,8 @@ export const getRegion = cache(async function (countryCode: string) {
       : regionMap.get("us")
 
     return region
-  } catch (e: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (e) {
     return null
   }
-})
+}

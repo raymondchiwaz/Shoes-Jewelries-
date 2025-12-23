@@ -21,7 +21,10 @@ import {
   MINIO_SECRET_KEY,
   MINIO_BUCKET,
   MEILISEARCH_HOST,
-  MEILISEARCH_ADMIN_KEY
+  MEILISEARCH_ADMIN_KEY,
+  SHIPPING_API_URL,
+  SHIPPING_API_KEY,
+  SUPABASE_ANON_KEY
 } from 'lib/constants';
 
 loadEnv(process.env.NODE_ENV, process.cwd());
@@ -74,6 +77,31 @@ const medusaConfig = {
           }])
         ]
       }
+    },
+    {
+      key: Modules.FULFILLMENT,
+      resolve: '@medusajs/fulfillment',
+      options: {
+        providers: [
+          {
+            resolve: '@medusajs/fulfillment-manual',
+            id: 'manual',
+            options: {}
+          },
+          {
+            resolve: './src/modules/external-shipping-provider',
+            id: 'external-shipping',
+            options: {
+              apiUrl: SHIPPING_API_URL || "https://www.shiprank.info",
+              apiKey: SHIPPING_API_KEY || "",
+              supabaseAnonKey: SUPABASE_ANON_KEY || ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      resolve: './src/modules/fashion',
     },
     ...(REDIS_URL ? [{
       key: Modules.EVENT_BUS,
@@ -135,7 +163,7 @@ const medusaConfig = {
     }] : [])
   ],
   plugins: [
-  ...(MEILISEARCH_HOST && MEILISEARCH_ADMIN_KEY ? [{
+    ...(MEILISEARCH_HOST && MEILISEARCH_ADMIN_KEY ? [{
       resolve: '@rokmohar/medusa-plugin-meilisearch',
       options: {
         config: {

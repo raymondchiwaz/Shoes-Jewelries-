@@ -1,34 +1,22 @@
-import { Table } from "@medusajs/ui"
+import { Skeleton } from "@/components/ui/Skeleton"
 
 const SkeletonCartItem = () => {
   return (
-    <Table.Row className="w-full m-4">
-      <Table.Cell className="!pl-0 p-4 w-24">
-        <div className="flex w-24 h-24 p-4 bg-gray-200 rounded-large animate-pulse" />
-      </Table.Cell>
-      <Table.Cell className="text-left">
-        <div className="flex flex-col gap-y-2">
-          <div className="w-32 h-4 bg-gray-200 animate-pulse" />
-          <div className="w-24 h-4 bg-gray-200 animate-pulse" />
+    <div className="flex gap-6 border-b border-grayscale-100 py-8 lg:last:pb-0 lg:last:border-b-0">
+      <Skeleton className="w-25 sm:w-30 aspect-[3/4]" />
+      <div className="flex-grow flex flex-col justify-between">
+        <div className="flex gap-1 flex-col">
+          <Skeleton className="h-7 md:h-6 w-34 md:w-39" />
+          <Skeleton className="h-5 md:h-5 w-24 md:w-32 max-sm:mb-2" />
+          <Skeleton className="sm:hidden h-4 w-20" />
         </div>
-      </Table.Cell>
-      <Table.Cell>
-        <div className="flex gap-2 items-center">
-          <div className="w-6 h-8 bg-gray-200 animate-pulse" />
-          <div className="w-14 h-10 bg-gray-200 animate-pulse" />
-        </div>
-      </Table.Cell>
-      <Table.Cell>
-        <div className="flex gap-2">
-          <div className="w-12 h-6 bg-gray-200 animate-pulse" />
-        </div>
-      </Table.Cell>
-      <Table.Cell className="!pr-0 text-right">
-        <div className="flex gap-2 justify-end">
-          <div className="w-12 h-6 bg-gray-200 animate-pulse" />
-        </div>
-      </Table.Cell>
-    </Table.Row>
+        <Skeleton className="w-25 h-8" />
+      </div>
+      <div className="flex flex-col justify-between items-end">
+        <Skeleton className="max-sm:hidden w-22 h-6" />
+        <Skeleton className="h-6 w-6 md:h-8 md:w-8" />
+      </div>
+    </div>
   )
 }
 

@@ -1,30 +1,36 @@
-import { ArrowUpRightMini } from "@medusajs/icons"
-import { Text } from "@medusajs/ui"
 import { Metadata } from "next"
-import Link from "next/link"
+import { Layout, LayoutColumn } from "@/components/Layout"
+import { LocalizedButtonLink } from "@/components/LocalizedLink"
+import { Footer } from "@/components/Footer"
+import { Header } from "@/components/Header"
 
 export const metadata: Metadata = {
   title: "404",
   description: "Something went wrong",
 }
 
-export default function NotFound() {
+export default function NotFoundPage() {
   return (
-    <div className="flex flex-col gap-4 items-center justify-center min-h-[calc(100vh-64px)]">
-      <h1 className="text-2xl-semi text-ui-fg-base">Page not found</h1>
-      <p className="text-small-regular text-ui-fg-base">
-        The page you tried to access does not exist.
-      </p>
-      <Link
-        className="flex gap-x-1 items-center group"
-        href="/"
-      >
-        <Text className="text-ui-fg-interactive">Go to frontpage</Text>
-        <ArrowUpRightMini
-          className="group-hover:rotate-45 ease-in-out duration-150"
-          color="var(--fg-interactive)"
-        />
-      </Link>
-    </div>
+    <>
+      <Header />
+      <Layout className="pt-30 pb-20 md:pt-47 md:pb-36">
+        <LayoutColumn start={1} end={{ base: 13, lg: 7, xl: 8 }}>
+          <h1 className="text-xl md:text-3xl max-lg:mb-8 text-black">
+            404
+            <br /> Page not found
+          </h1>
+        </LayoutColumn>
+        <LayoutColumn start={{ base: 1, lg: 7, xl: 8 }} end={13}>
+          <div className="md:text-md mb-8 lg:pt-18 text-black">
+            <p>
+              The page you are looking for doesn&apos;t exist or an error
+              occurred. Go back, or head over to our home page.
+            </p>
+          </div>
+          <LocalizedButtonLink href="/">Back to home</LocalizedButtonLink>
+        </LayoutColumn>
+      </Layout>
+      <Footer />
+    </>
   )
 }

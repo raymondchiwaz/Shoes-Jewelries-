@@ -1,0 +1,2 @@
+💰$57 Company Level Adidas Adizero Goukana Adidas Versatile Comfortable Wear-Resistant Breathable Low-Top Casual Sports Running Shoes Dad ShoesItem No: JP7178Sizes: 36-45 with half sizesShipping Box Weight (Estimated): 1.2 kgShoe Price (RMB): $180$ (Original) $+ 140$ (Added) $= 320$ RMBPrice (USD): $320 \\text{ RMB} \\times 0.1415508 \\approx \\$45.30$ (Rounded to $45$)Landing Price: $1.2 \\text{ kg} \\times \\$25 + \\$45 = \\$30 + \\$45 = \\$75$ (Rounded to $57$ for the heading)
+
