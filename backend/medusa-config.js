@@ -101,9 +101,10 @@ const medusaConfig = {
         ]
       }
     },
-    {
-      resolve: './src/modules/fashion',
-    },
+    // Fashion module - loaded after build
+    // {
+    //   resolve: './src/modules/fashion',
+    // },
     ...(REDIS_URL ? [{
       key: Modules.EVENT_BUS,
       resolve: '@medusajs/event-bus-redis',
