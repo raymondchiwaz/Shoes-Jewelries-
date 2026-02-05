@@ -1,260 +1,250 @@
 "use client"
 
-import { CheckCircleSolid, ChevronDown } from "@medusajs/icons"
+import { RadioGroup } from "@headlessui/react"
+import { CheckCircleSolid } from "@medusajs/icons"
 import { Button, Heading, Text, clx } from "@medusajs/ui"
 
 import Divider from "@modules/common/components/divider"
+import Radio from "@modules/common/components/radio"
 import ErrorMessage from "@modules/checkout/components/error-message"
 import { useRouter, useSearchParams, usePathname } from "next/navigation"
-import { useState, useMemo, useCallback, useEffect } from "react"
+import { useEffect, useState } from "react"
 import { setShippingMethod } from "@lib/data/cart"
 import { HttpTypes } from "@medusajs/types"
+import { getShipRankShippingRates, ShipRankShippingRate } from "@lib/data/shiprank"
 
 type ShippingProps = {
   cart: HttpTypes.StoreCart
   availableShippingMethods: HttpTypes.StoreCartShippingOption[] | null
 }
 
-const getCompanyName = (name: string): string => name.split(" - ")[0] || name
-const getServiceName = (name: string): string => name.split(" - ").slice(1).join(" - ") || name
-
-const Shipping: React.FC<ShippingProps> = ({ cart, availableShippingMethods }) => {
+const Shipping: React.FC<ShippingProps> = ({
+  cart,
+  availableShippingMethods,
+}) => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-
-  // Track LOCAL selection (this is the source of truth for the UI)
-  const [localSelectedId, setLocalSelectedId] = useState<string>("")
-  const [isInitialized, setIsInitialized] = useState(false)
-
-  const [expandedCompanies, setExpandedCompanies] = useState<string[]>([])
+  const [shipRankRates, setShipRankRates] = useState<ShipRankShippingRate[]>([])
+  const [loadingRates, setLoadingRates] = useState(false)
+  const [selectedShipRankId, setSelectedShipRankId] = useState<string>("")
 
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
-  const isOpen = searchParams.get("step") === "shipping"
 
-  // Initialize from cart ONLY on first render
+  const isOpen = searchParams.get("step") === "delivery"
+
+  // Find the selected shipping method from Medusa's options
+  const selectedShippingMethod = availableShippingMethods?.find(
+    (method) => method.id === cart.shipping_methods?.at(-1)?.shipping_option_id
+  )
+
+  // Fetch ShipRank rates when the step opens
   useEffect(() => {
-    if (!isInitialized) {
-      const cartOption = cart.shipping_methods?.at(-1)?.shipping_option_id || ""
-      setLocalSelectedId(cartOption)
-      setIsInitialized(true)
-
-      // Auto-expand the company of the current selection
-      if (cartOption && availableShippingMethods) {
-        const opt = availableShippingMethods.find(o => o.id === cartOption)
-        if (opt) {
-          setExpandedCompanies([getCompanyName(opt.name)])
-        }
-      }
+    if (isOpen && cart?.id) {
+      setLoadingRates(true)
+      getShipRankShippingRates(cart.id)
+        .then((data) => {
+          if (data?.shipping_rates) {
+            setShipRankRates(data.shipping_rates)
+          }
+        })
+        .finally(() => setLoadingRates(false))
     }
-  }, [cart.shipping_methods, availableShippingMethods, isInitialized])
+  }, [isOpen, cart?.id])
 
-  // Group by company
-  const grouped = useMemo(() => {
-    if (!availableShippingMethods) return {} as Record<string, HttpTypes.StoreCartShippingOption[]>
-    return availableShippingMethods.reduce((acc, opt) => {
-      const company = getCompanyName(opt.name)
-      if (!acc[company]) acc[company] = []
-      acc[company].push(opt)
-      return acc
-    }, {} as Record<string, HttpTypes.StoreCartShippingOption[]>)
-  }, [availableShippingMethods])
+  const handleEdit = () => {
+    router.push(pathname + "?step=delivery", { scroll: false })
+  }
 
-  const toggleCompany = useCallback((company: string) => {
-    setExpandedCompanies(prev =>
-      prev.includes(company) ? prev.filter(c => c !== company) : [...prev, company]
-    )
-  }, [])
+  const handleSubmit = () => {
+    router.push(pathname + "?step=payment", { scroll: false })
+  }
 
-  const handleSelectOption = useCallback(async (optionId: string) => {
-    if (isLoading) return
-    if (optionId === localSelectedId) return
-
-    const prevId = localSelectedId
-
-    console.log("=== Selecting shipping option ===")
-    console.log("Option ID:", optionId)
-    console.log("Cart ID:", cart.id)
-
-    // Update UI immediately
-    setLocalSelectedId(optionId)
+  // Handle ShipRank rate selection - we need to set the matching Medusa shipping method
+  const handleShipRankSelect = async (shipRankId: string) => {
+    setSelectedShipRankId(shipRankId)
     setIsLoading(true)
     setError(null)
-
-    // Expand the company of the new selection
-    const opt = availableShippingMethods?.find(o => o.id === optionId)
-    if (opt) {
-      const company = getCompanyName(opt.name)
-      setExpandedCompanies(prev => prev.includes(company) ? prev : [...prev, company])
-    }
-
-    try {
-      await setShippingMethod({ cartId: cart.id, shippingMethodId: optionId })
-      console.log("=== Shipping method set successfully ===")
-
-      // DON'T call router.refresh() - it resets the UI
-      // The cart will update on the next navigation
-    } catch (e: any) {
-      console.error("=== Failed to set shipping method ===", e)
-      setError(e.message || "Failed to set shipping method. Please try again.")
-      // Revert to previous selection
-      setLocalSelectedId(prevId)
-    } finally {
+    
+    // Find the Medusa shipping option that matches this ShipRank rate
+    // The Medusa shipping options have data.shiprank_id that matches the ShipRank rate id
+    const matchingMethod = availableShippingMethods?.find(
+      (method) => method.data?.shiprank_id === shipRankId || method.data?.id === shipRankId
+    )
+    
+    const methodToUse = matchingMethod || availableShippingMethods?.[0]
+    
+    if (methodToUse) {
+      try {
+        console.log('Setting shipping method:', methodToUse.id, 'for ShipRank rate:', shipRankId)
+        await setShippingMethod({ cartId: cart.id, shippingMethodId: methodToUse.id })
+        console.log('Shipping method set successfully')
+      } catch (err: any) {
+        console.error('Failed to set shipping method:', err)
+        setError(err.message || "Failed to set shipping method")
+      } finally {
+        setIsLoading(false)
+      }
+    } else {
+      setError("No shipping methods available. Please try again.")
       setIsLoading(false)
     }
-  }, [isLoading, localSelectedId, cart.id, availableShippingMethods])
+  }
 
-  const handleContinue = useCallback(async () => {
-    if (!localSelectedId) {
-      setError("Please select a shipping method")
-      return
-    }
+  useEffect(() => {
+    setError(null)
+  }, [isOpen])
 
-    // Make sure selection is saved before continuing
-    setIsLoading(true)
-    try {
-      // Ensure the current selection is set
-      await setShippingMethod({ cartId: cart.id, shippingMethodId: localSelectedId })
-      router.push(pathname + "?step=payment", { scroll: false })
-    } catch (e: any) {
-      setError(e.message || "Failed to save shipping method")
-    } finally {
-      setIsLoading(false)
-    }
-  }, [localSelectedId, cart.id, router, pathname])
-
-  const formatRate = (rate: number) => "$" + (rate / 100).toFixed(2) + "/kg"
-
-  const companies = Object.keys(grouped).sort()
-  const selectedOpt = availableShippingMethods?.find(o => o.id === localSelectedId)
+  // Find the selected ShipRank rate for display
+  const selectedRate = shipRankRates.find(r => r.id === selectedShipRankId)
 
   return (
     <div className="bg-white">
-      <div className="flex items-center justify-between mb-6">
-        <Heading level="h2" className={clx("flex items-center gap-2 text-3xl-regular", {
-          "opacity-50": !isOpen && !localSelectedId
-        })}>
+      <div className="flex flex-row items-center justify-between mb-6">
+        <Heading
+          level="h2"
+          className={clx(
+            "flex flex-row text-3xl-regular gap-x-2 items-baseline",
+            {
+              "opacity-50 pointer-events-none select-none":
+                !isOpen && cart.shipping_methods?.length === 0,
+            }
+          )}
+        >
           Delivery
-          {!isOpen && localSelectedId && <CheckCircleSolid />}
+          {!isOpen && (cart.shipping_methods?.length ?? 0) > 0 && (
+            <CheckCircleSolid />
+          )}
         </Heading>
-        {!isOpen && cart?.email && (
-          <button
-            onClick={() => router.push(pathname + "?step=shipping")}
-            className="text-blue-600 hover:underline"
-          >
-            Edit
-          </button>
-        )}
+        {!isOpen &&
+          cart?.shipping_address &&
+          cart?.billing_address &&
+          cart?.email && (
+            <Text>
+              <button
+                onClick={handleEdit}
+                className="text-ui-fg-interactive hover:text-ui-fg-interactive-hover"
+                data-testid="edit-delivery-button"
+              >
+                Edit
+              </button>
+            </Text>
+          )}
       </div>
-
       {isOpen ? (
-        <div>
-          <div className="space-y-2 pb-6">
-            {companies.length === 0 && (
-              <Text className="text-gray-500">No shipping options available.</Text>
-            )}
-            {companies.map(company => {
-              const opts = grouped[company]
-              const isExpanded = expandedCompanies.includes(company)
-              const hasSelectedOption = opts.some(o => o.id === localSelectedId)
-              const minRate = Math.min(...opts.map(o => (o.data as any)?.rate || 0))
-
-              return (
-                <div
-                  key={company}
-                  className={clx(
-                    "border rounded-lg overflow-hidden transition-colors",
-                    hasSelectedOption ? "border-blue-500 bg-blue-50/50" : "border-gray-200"
-                  )}
-                >
-                  {/* Company Header */}
-                  <button
-                    type="button"
-                    onClick={() => toggleCompany(company)}
-                    className={clx(
-                      "w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors",
-                      hasSelectedOption && "bg-blue-50"
-                    )}
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="font-semibold">{company}</span>
-                      <span className="text-sm text-gray-500">({opts.length})</span>
-                      {hasSelectedOption && <CheckCircleSolid className="text-green-600 w-4 h-4" />}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-gray-500">From {formatRate(minRate)}</span>
-                      <ChevronDown className={clx("w-4 h-4 transition-transform", isExpanded && "rotate-180")} />
-                    </div>
-                  </button>
-
-                  {/* Options */}
-                  {isExpanded && (
-                    <div className="border-t border-gray-200">
-                      {opts.map(opt => {
-                        const rate = (opt.data as any)?.rate || 0
-                        const isSelected = opt.id === localSelectedId
-
-                        return (
-                          <button
-                            key={opt.id}
-                            type="button"
-                            disabled={isLoading}
-                            onClick={() => handleSelectOption(opt.id)}
-                            className={clx(
-                              "w-full flex items-center justify-between p-3 px-6 text-left border-b last:border-b-0 transition-all",
-                              isSelected ? "bg-blue-100" : "hover:bg-gray-50",
-                              isLoading && "opacity-50 cursor-wait"
-                            )}
-                          >
-                            <div className="flex items-center gap-3">
-                              {/* Radio */}
-                              <div
-                                className={clx(
-                                  "w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors",
-                                  isSelected ? "border-blue-600 bg-blue-600" : "border-gray-300 bg-white"
-                                )}
-                              >
-                                {isSelected && (
-                                  <div className="w-2 h-2 rounded-full bg-white" />
-                                )}
-                              </div>
-                              <span className={clx("text-sm", isSelected && "font-medium")}>
-                                {getServiceName(opt.name)}
-                              </span>
-                            </div>
-                            <div className="text-right flex-shrink-0">
-                              <span className="text-sm text-gray-700 font-medium">{formatRate(rate)}</span>
-                            </div>
-                          </button>
-                        )
-                      })}
-                    </div>
-                  )}
-                </div>
-              )
-            })}
+        <div data-testid="delivery-options-container">
+          {/* Pay on Collection Notice */}
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
+            <div className="flex items-start gap-3">
+              <span className="text-amber-600 text-lg">📦</span>
+              <div>
+                <Text className="txt-medium-plus text-amber-800 font-semibold">
+                  Pay on Collection
+                </Text>
+                <Text className="txt-small text-amber-700">
+                  Shipping fees are paid directly to the courier when you collect your package.
+                </Text>
+              </div>
+            </div>
           </div>
 
-          <ErrorMessage error={error} />
+          {loadingRates ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600"></div>
+              <Text className="ml-3 text-ui-fg-subtle">Loading shipping rates...</Text>
+            </div>
+          ) : (
+            <div className="pb-8">
+              <RadioGroup value={selectedShipRankId} onChange={handleShipRankSelect}>
+                {shipRankRates.map((rate) => (
+                  <RadioGroup.Option
+                    key={rate.id}
+                    value={rate.id}
+                    data-testid="delivery-option-radio"
+                    className={clx(
+                      "flex items-center justify-between text-small-regular cursor-pointer py-4 border rounded-rounded px-4 mb-2 hover:shadow-borders-interactive-with-active",
+                      {
+                        "border-ui-border-interactive bg-amber-50":
+                          rate.id === selectedShipRankId,
+                      }
+                    )}
+                  >
+                    <div className="flex items-center gap-x-4">
+                      <Radio checked={rate.id === selectedShipRankId} />
+                      <div className="flex flex-col">
+                        <span className="text-base-regular font-medium">{rate.name}</span>
+                        {rate.estimated_days && (
+                          <span className="text-xs text-ui-fg-subtle">
+                            Estimated: {rate.estimated_days}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <span className="text-ui-fg-base font-semibold">
+                        {rate.amount_formatted}
+                      </span>
+                      <span className="text-xs text-amber-600">Pay on Collection</span>
+                    </div>
+                  </RadioGroup.Option>
+                ))}
+              </RadioGroup>
+              
+              {shipRankRates.length === 0 && !loadingRates && (
+                <Text className="text-ui-fg-subtle text-center py-4">
+                  No shipping options available for your location.
+                </Text>
+              )}
+            </div>
+          )}
+
+          <ErrorMessage
+            error={error}
+            data-testid="delivery-option-error-message"
+          />
 
           <Button
             size="large"
-            onClick={handleContinue}
+            className="mt-6"
+            onClick={handleSubmit}
             isLoading={isLoading}
-            disabled={!localSelectedId || isLoading}
+            disabled={!selectedShipRankId}
+            data-testid="submit-delivery-option-button"
           >
             Continue to payment
           </Button>
         </div>
       ) : (
-        localSelectedId && selectedOpt && (
-          <div className="space-y-1">
-            <Text className="text-sm text-gray-500">Shipping method</Text>
-            <Text className="text-gray-900">{selectedOpt.name}</Text>
-            <Text className="text-sm text-gray-500">{formatRate((selectedOpt.data as any)?.rate || 0)}</Text>
+        <div>
+          <div className="text-small-regular">
+            {cart && (cart.shipping_methods?.length ?? 0) > 0 && selectedRate && (
+              <div className="flex flex-col w-full">
+                <Text className="txt-medium-plus text-ui-fg-base mb-1">
+                  Method
+                </Text>
+                <Text className="txt-medium text-ui-fg-subtle">
+                  {selectedRate.name} - {selectedRate.amount_formatted}
+                  {selectedRate.estimated_days && (
+                    <span className="text-ui-fg-muted ml-2">({selectedRate.estimated_days})</span>
+                  )}
+                  <span className="text-amber-600 ml-2">(Pay on Collection)</span>
+                </Text>
+              </div>
+            )}
+            {cart && (cart.shipping_methods?.length ?? 0) > 0 && !selectedRate && selectedShippingMethod && (
+              <div className="flex flex-col w-full">
+                <Text className="txt-medium-plus text-ui-fg-base mb-1">
+                  Method
+                </Text>
+                <Text className="txt-medium text-ui-fg-subtle">
+                  {selectedShippingMethod.name}
+                  <span className="text-amber-600 ml-2">(Pay on Collection)</span>
+                </Text>
+              </div>
+            )}
           </div>
-        )
+        </div>
       )}
       <Divider className="mt-8" />
     </div>

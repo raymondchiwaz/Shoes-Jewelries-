@@ -5,12 +5,10 @@ export const SkeletonMobileCheckoutSummaryTrigger = () => (
     type="button"
     className="h-18 flex justify-between items-center w-full group"
     data-open="no"
+    disabled
   >
-    <p>Order summary</p>
-    <div className="flex items-center gap-4">
-      <Skeleton colorScheme="white" className="h-6 w-20" />
-      <Skeleton colorScheme="white" className="h-6 w-6" />
-    </div>
+    <Skeleton colorScheme="white" className="h-6 w-30" />
+    <Skeleton colorScheme="white" className="h-6 w-30" />
   </button>
 )
 

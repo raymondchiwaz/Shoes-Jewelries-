@@ -4,9 +4,7 @@ export default function SkeletonCheckoutSummary() {
   return (
     <>
       <div className="flex justify-between items-center mb-8 lg:mb-16">
-        <div>
-          <p className="opacity-0">Order — 0 items</p>
-        </div>
+        <Skeleton colorScheme="white" className="h-6 w-40" />
         <Skeleton colorScheme="white" className="h-6 w-20" />
       </div>
       <div className="flex gap-4 lg:gap-6 mb-8">
