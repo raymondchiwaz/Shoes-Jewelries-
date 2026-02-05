@@ -1,10 +1,1 @@
 Product Id,Product Handle,Product Title,Product Subtitle,Product Description,Product Status,Product Thumbnail,Product Weight,Product Length,Product Width,Product Height,Product HS Code,Product Origin Country,Product MID Code,Product Material,Product Collection Id,Product Type Id,Product Tag 1,Product Discountable,Product External Id,Variant Id,Variant Title,Variant SKU,Variant Barcode,Variant Allow Backorder,Variant Manage Inventory,Variant Weight,Variant Length,Variant Width,Variant Height,Variant HS Code,Variant Origin Country,Variant MID Code,Variant Material,Variant Price EUR,Variant Price USD,Variant Option 1 Name,Variant Option 1 Value,Product Image 1 Url,Product Image 2 Url
-,test-product-1,Test Product One,,A simple test product for import verification,published,https://picsum.photos/seed/test1/800/800,,,,,,,,,,,,TRUE,,,Test Product One - Default,TEST-PROD-1,,FALSE,TRUE,,,,,,,,,,25.00,Size,Default,https://picsum.photos/seed/test1a/800/800,https://picsum.photos/seed/test1b/800/800
-,test-product-2,Test Product Two,,Another simple test product,published,https://picsum.photos/seed/test2/800/800,,,,,,,,,,,,TRUE,,,Test Product Two - Default,TEST-PROD-2,,FALSE,TRUE,,,,,,,,,,35.00,Size,Default,https://picsum.photos/seed/test2a/800/800,https://picsum.photos/seed/test2b/800/800
-
-
-
-
-
-
-
